@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import { Authenticator } from "@aws-amplify/ui-react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -29,12 +29,18 @@ const theme = createTheme({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    Component: Layout,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
+    children: [
+      {
+        index: true,
+        Component: App,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+    ],
   },
 ]);
 
@@ -42,11 +48,19 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Authenticator.Provider>
       <ThemeProvider theme={theme}>
-        <NavBar />
-        <main>
-          <RouterProvider router={router} />
-        </main>
+        <RouterProvider router={router} />
       </ThemeProvider>
     </Authenticator.Provider>
   </React.StrictMode>
 );
+
+function Layout() {
+  return (
+    <div>
+      <NavBar />
+      <main>
+        <Outlet />
+      </main>
+    </div>
+  );
+}

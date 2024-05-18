@@ -1,31 +1,32 @@
 import "@aws-amplify/ui-react/styles.css";
-import { generateClient } from "aws-amplify/data";
 import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
-
-const client = generateClient<Schema>();
+import { useAmplifyClient } from "./store/app";
 
 function App() {
+  const client = useAmplifyClient((state) => state.client);
+  const createTodo = useAmplifyClient((state) => state.createTodo);
+  const deleteTodo = useAmplifyClient((state) => state.deleteTodo);
+
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
 
   useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
+    const sub = client.models.Todo.observeQuery().subscribe({
       next: (data) => setTodos([...data.items]),
     });
-  }, []);
+    return () => sub.unsubscribe();
+  }, [client]);
 
-  function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
-  }
-
-  function deleteTodo(id: string) {
-    client.models.Todo.delete({ id });
+  function addTodo() {
+    const content = window.prompt("Todo content");
+    if (!content) return;
+    createTodo(content);
   }
 
   return (
     <>
       <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
+      <button onClick={addTodo}>+ new</button>
       <ul>
         {todos.map((todo) => (
           <li onClick={() => deleteTodo(todo.id)} key={todo.id}>
