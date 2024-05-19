@@ -1,7 +1,7 @@
 import "@aws-amplify/ui-react/styles.css";
 import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
-import { useAmplifyClient } from "./store/app";
+import { useAmplifyClient } from "./store";
 
 function App() {
   const client = useAmplifyClient((state) => state.client);

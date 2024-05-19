@@ -1,4 +1,4 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { a, defineData, type ClientSchema } from "@aws-amplify/backend";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -11,6 +11,23 @@ const schema = a.schema({
     .model({
       content: a.string(),
     })
+    .authorization((allow) => [allow.owner()]),
+  Prefs: a
+    .model({
+      gptApiKey: a.string(),
+      useAwsAI: a.boolean(),
+    })
+    .authorization((allow) => [allow.owner()]),
+  JobItem: a.model({
+    name: a.string().required(),
+    description: a.string(),
+    createdAt: a.date().required(),
+    appliedAt: a.date(),
+    coverLetterText: a.string(),
+    cvText: a.string(),
+    status: a.string(),
+    reply: a.string(),
+  })
     .authorization((allow) => [allow.owner()]),
 });
 
