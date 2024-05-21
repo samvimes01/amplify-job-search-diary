@@ -1,5 +1,6 @@
 import "@aws-amplify/ui-react/styles.css";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import type { Schema } from "../amplify/data/resource";
 import { useAmplifyClient } from "./store";
 
@@ -25,6 +26,7 @@ function App() {
 
   return (
     <>
+      <Link to="job/new">Add a new Job</Link>
       <h1>My todos</h1>
       <button onClick={addTodo}>+ new</button>
       <ul>

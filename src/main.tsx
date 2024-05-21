@@ -12,6 +12,7 @@ import NavBar from "./components/NavBar.tsx";
 import "./index.css";
 import ErrorPage from "./pages/Error.tsx";
 import Profile from "./pages/Profile.tsx";
+import Job from './pages/Job.tsx';
 
 Amplify.configure(outputs);
 
@@ -39,6 +40,14 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "job/new",
+        element: <Job />,
+      },
+      {
+        path: "job/:jobId",
+        element: <Job />,
       },
     ],
   },

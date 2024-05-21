@@ -1,7 +1,8 @@
 import { generateClient } from "aws-amplify/data";
 import { StateCreator, create } from 'zustand';
-import { ClientSlice } from './interface';
 import { Schema } from '../../amplify/data/resource';
+import { ClientSlice } from './interface';
+import { JobSlice, createJobSlice } from './job_item';
 import { ProfileSlice, createProfileSlice } from './profile';
 
 // temp todo slice - delete later
@@ -26,9 +27,10 @@ export const createTodoSlice: StateCreator<
 })
 //
 
-export const useAmplifyClient = create<ClientSlice & TodoSlice & ProfileSlice>((...a) => ({
+export const useAmplifyClient = create<ClientSlice & TodoSlice & ProfileSlice & JobSlice>((...a) => ({
   client: generateClient<Schema>({ authMode: "userPool" }),
    ...createTodoSlice(...a),
    ...createProfileSlice(...a),
+  ...createJobSlice(...a),
 }))
 

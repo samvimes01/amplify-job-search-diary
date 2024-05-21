@@ -1,4 +1,4 @@
-import { a, defineData, type ClientSchema } from "@aws-amplify/backend";
+import { a, defineData, defineFunction, type ClientSchema } from "@aws-amplify/backend";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -24,11 +24,17 @@ const schema = a.schema({
     createdAt: a.date().required(),
     appliedAt: a.date(),
     coverLetterText: a.string(),
+    cvFile: a.string(),
     cvText: a.string(),
     status: a.string(),
     reply: a.string(),
   })
     .authorization((allow) => [allow.owner()]),
+  CvTexts: a.model({
+    file: a.string().required(),
+    text: a.string(),
+  })
+    .authorization(allow => [allow.authenticated(), allow.owner(), allow.custom()])
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -37,6 +43,12 @@ export const data = defineData({
   schema,
   authorizationModes: {
     defaultAuthorizationMode: "userPool",
+    lambdaAuthorizationMode: {
+      function: defineFunction({
+        entry: './custom-authorizer.ts',
+      }),
+      timeToLiveInSeconds: 300,
+    },
   },
 });
 
