@@ -1,6 +1,5 @@
 import { a, defineData, defineFunction, type ClientSchema } from "@aws-amplify/backend";
-
-export const MODEL_ID = "mistral.mistral-7b-instruct-v0:2";
+import { MODEL_ID } from './mistral';
 
 export const mistralCoverLetter = defineFunction({
   entry: "./mistral.ts",

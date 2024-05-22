@@ -5,6 +5,7 @@ import {
   InvokeModelCommandInput,
 } from "@aws-sdk/client-bedrock-runtime";
 
+export const MODEL_ID = "mistral.mistral-7b-instruct-v0:2";
 
 export const handler: Schema["generateCover"]["functionHandler"] = async (
   event,
@@ -27,7 +28,7 @@ export const handler: Schema["generateCover"]["functionHandler"] = async (
 
   // Invoke model
   const input = {
-    modelId: "mistral.mistral-7b-instruct-v0:2",
+    modelId: MODEL_ID,
     contentType: "application/json",
     accept: "application/json",
     body: JSON.stringify({
