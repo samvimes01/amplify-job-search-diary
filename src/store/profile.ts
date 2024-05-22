@@ -2,9 +2,10 @@ import { StateCreator } from 'zustand';
 import { ClientSlice } from './interface';
 
 export interface ProfileSlice {
-  openAiKey: string;
-  getOpenAiKey: () => Promise<string>;
-  setOpenAiKey: (key: string) => Promise<void>;
+  hasApiKey: boolean | null;
+  hasOpenAiKey: () => Promise<boolean>;
+  getPrefs: () => Promise<{name: string; key: string }>;
+  setPrefs: (key: string, name: string) => Promise<void>;
 }
 
 export const createProfileSlice: StateCreator<
@@ -13,24 +14,31 @@ export const createProfileSlice: StateCreator<
   [],
   ProfileSlice
 > = (set, get) => ({
-  openAiKey: '',
-  getOpenAiKey: async () => {
-    if (get().openAiKey) {
-      return get().openAiKey;
+  hasApiKey: null,
+  hasOpenAiKey: async () => {
+    if (get().hasApiKey != null) {
+      return !!get().hasApiKey;
     }
     const client = get().client;
     const { data } = await client.models.Prefs.list();
-    const openAiKey = data[0]?.gptApiKey ?? "";
-    return openAiKey
+    const hasApiKey = data[0]?.hasApiKey ?? false;
+    return !!hasApiKey
   },
-  setOpenAiKey: async (key: string) => {
+  getPrefs: async () => {
+    const client = get().client;
+    const { data } = await client.models.Prefs.list();
+    const key = data[0]?.gptApiKey ?? "";
+    const name = data[0]?.fullName ?? "";
+    return { key, name}
+  },
+  setPrefs: async (key: string, name: string) => {
     const client = get().client;
     const { data } = await client.models.Prefs.list();
     if (!data.length) {
-      client.models.Prefs.create({ gptApiKey: key, useAwsAI: false });
+      client.models.Prefs.create({ gptApiKey: key, fullName: name, hasApiKey: !!key });
     } else {
-      client.models.Prefs.update({ gptApiKey: key, id: data[0].id });
+      client.models.Prefs.update({ gptApiKey: key, fullName: name, hasApiKey: !!key, id: data[0].id });
     }
-    return set({ client, openAiKey: key })
-  },
+    return set({ client, hasApiKey: !!key })
+  }
 })

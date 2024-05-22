@@ -1,7 +1,10 @@
 import { defineFunction, defineStorage } from '@aws-amplify/backend';
 
 const onUpload = defineFunction({
-  entry: './on-upload-handlers.ts'
+  entry: './on-upload-handlers.ts',
+  environment: {
+    GRAPHQL_API: process.env.GRAPHQL_API!,
+  }
 })
 
 export const storage = defineStorage({

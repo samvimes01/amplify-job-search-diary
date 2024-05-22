@@ -14,7 +14,7 @@ Amplify.configure(
   {
     API: {
       GraphQL: {
-        endpoint: process.env.GRAPHQL_API!, // set in .env and via dashboard on prod, or Find out how to get from env.AMPLIFY_DATA_GRAPHQL_ENDPOINT
+        endpoint: env.GRAPHQL_API, // set in .env and via dashboard on prod, or Find out how to get from env.AMPLIFY_DATA_GRAPHQL_ENDPOINT
         region: env.AWS_REGION,
         defaultAuthMode: "lambda",
       },
@@ -24,7 +24,7 @@ Amplify.configure(
 
 
 const client = generateClient<Schema>({ authMode: "lambda", authToken: "custom-authorized" });
-const s3 = new S3Client({ region: process.env.AWS_REGION });
+const s3 = new S3Client({ region: env.AWS_REGION });
 
 export const handler: S3Handler = async (event): Promise<void> => {
   const bucket = event.Records[0].s3.bucket.name;

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
-import { Authenticator } from "@aws-amplify/ui-react";
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Amplify } from "aws-amplify";
 
@@ -11,10 +11,21 @@ import App from "./App.tsx";
 import NavBar from "./components/NavBar.tsx";
 import "./index.css";
 import ErrorPage from "./pages/Error.tsx";
+import Job from "./pages/Job.tsx";
 import Profile from "./pages/Profile.tsx";
-import Job from './pages/Job.tsx';
 
 Amplify.configure(outputs);
+const existingConfig = Amplify.getConfig();
+Amplify.configure({
+  ...existingConfig,
+  API: {
+    ...existingConfig.API,
+    REST: {
+      ...existingConfig.API?.REST,
+      ...outputs.custom.API,
+    },
+  },
+});
 
 const theme = createTheme({
   palette: {
@@ -64,12 +75,17 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 );
 
 function Layout() {
-  return (
+  const { route } = useAuthenticator((context) => [context.route]);
+
+  // Use the value of route to decide which page to render
+  return route === "authenticated" ? (
     <div>
       <NavBar />
       <main>
         <Outlet />
       </main>
     </div>
+  ) : (
+    <Authenticator />
   );
 }

@@ -49,7 +49,7 @@ const FileList = ({
             onClick={() => onClick(file.path)}
             className={clsx({ active: selected == file.path })}
           >
-            <strong>{file.path}</strong>
+            <strong>{file.path.split("cvs/")[1]}</strong>
             <Text>
               Last modified: {file?.lastModified?.toLocaleString() ?? ""}
             </Text>

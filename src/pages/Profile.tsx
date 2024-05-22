@@ -12,22 +12,30 @@ import { useAmplifyClient } from "../store";
 function Profile() {
   const { user } = useAuthenticator((context) => [context.user]);
 
-  const getOpenAiKey = useAmplifyClient((state) => state.getOpenAiKey);
-  const setOpenAiKey = useAmplifyClient((state) => state.setOpenAiKey);
+  const getPrefs = useAmplifyClient((state) => state.getPrefs);
+  const setPrefs = useAmplifyClient((state) => state.setPrefs);
 
   const [key, setApiKey] = useState<string>("");
+  const [name, setName] = useState<string>("");
 
   useEffect(() => {
-    getOpenAiKey()
-      .then((key) => setApiKey(key))
+    getPrefs()
+      .then((p) => {
+        setName(p.name)
+        setApiKey(p.key)
+      })
       .catch(console.error);
-  }, [getOpenAiKey]);
+  }, [getPrefs]);
 
   const handleSuccess = () => {
-    alert("password is successfully changed!");
+    alert("preferences are successfully changed!");
   };
-  const onKeyInput = () => {
-    setOpenAiKey(key).catch(console.error);
+  const onSave = () => {
+    if (!name) {
+      alert("name is mandatory");
+      return 
+    }
+    setPrefs(key, name).catch(console.error);
   };
   return (
     <>
@@ -46,6 +54,13 @@ function Profile() {
       <Flex columnGap="8rem" rowGap="large" wrap="wrap">
         <Flex direction="column" gap="small" minWidth="340px">
           <h2>Preferences</h2>
+          <Label htmlFor="user_name">User full name</Label>
+          <Input
+            id="user_name"
+            name="user_name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <Label htmlFor="gpt_api_key">OpenAI API key:</Label>
           <Input
             id="gpt_api_key"
@@ -53,7 +68,7 @@ function Profile() {
             value={key}
             onChange={(e) => setApiKey(e.target.value)}
           />
-          <Button onClick={onKeyInput} maxWidth="fit-content">
+          <Button onClick={onSave} maxWidth="fit-content">
             Save
           </Button>
           <br />

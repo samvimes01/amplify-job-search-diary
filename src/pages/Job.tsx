@@ -28,21 +28,21 @@ function Job() {
     register,
     handleSubmit,
     setValue,
+    getValues,
     control,
     formState: { errors },
   } = useForm<JobItem>();
-  const getOpenAiKey = useAmplifyClient((state) => state.getOpenAiKey);
+  const hasOpenAiKey = useAmplifyClient((state) => state.hasOpenAiKey);
   const getCvText = useAmplifyClient((state) => state.getCvText);
   const createJob = useAmplifyClient((state) => state.createJob);
+  const getPrefs = useAmplifyClient((state) => state.getPrefs);
 
   const [hasGPT, setHasGPT] = useState(false);
   useEffect(() => {
-    getOpenAiKey()
-      .then((key) => {
-        setHasGPT(Boolean(key));
-      })
+    hasOpenAiKey()
+      .then((has) => setHasGPT(!!has))
       .catch(console.error);
-  }, [getOpenAiKey]);
+  }, [hasOpenAiKey]);
   const { cvText, name, description } = useWatch({ control });
   const hasGPTValues = !!cvText && !!name && !!description;
 
@@ -60,6 +60,24 @@ function Job() {
   const onSubmit: SubmitHandler<JobItem> = (data) => {
     createJob(data);
   };
+  const client = useAmplifyClient((state) => state.client);
+
+  const generateCover = async () => {
+    const { name: userName } = await getPrefs();
+    const { cvText, name, description } = getValues();
+    const { data } = await client.queries.generateCover({
+      prompt: JSON.stringify({
+        userName,
+        cvText,
+        name,
+        description,
+      }),
+    });
+    if (data) {
+      setValue("coverLetterText", data);
+    }
+  };
+
 
   return (
     <>
@@ -94,10 +112,15 @@ function Job() {
               <TextAreaField
                 rows={5}
                 label="Cover Letter"
+                value={getValues("coverLetterText")}
                 {...register("coverLetterText")}
               />
 
-              <Button type="button" disabled={!hasGPT || !hasGPTValues}>
+              <Button
+                type="button"
+                disabled={!hasGPT || !hasGPTValues}
+                onClick={generateCover}
+              >
                 Generate Cover Letter
               </Button>
 

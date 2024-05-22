@@ -1,5 +1,15 @@
 import { a, defineData, defineFunction, type ClientSchema } from "@aws-amplify/backend";
 
+export const MODEL_ID = "mistral.mistral-7b-instruct-v0:2";
+
+export const mistralCoverLetter = defineFunction({
+  entry: "./mistral.ts",
+  timeoutSeconds: 30,
+  environment: {
+    MODEL_ID,
+  },
+});
+
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
 adding a new "isDone" field as a boolean. The authorization rule below
@@ -7,6 +17,12 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
+  generateCover: a
+    .query()
+    .arguments({ prompt: a.string().required() })
+    .returns(a.string())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(mistralCoverLetter)),
   Todo: a
     .model({
       content: a.string(),
@@ -15,7 +31,8 @@ const schema = a.schema({
   Prefs: a
     .model({
       gptApiKey: a.string(),
-      useAwsAI: a.boolean(),
+      hasApiKey: a.boolean(),
+      fullName: a.string(),
     })
     .authorization((allow) => [allow.owner()]),
   JobItem: a.model({
@@ -48,6 +65,9 @@ export const data = defineData({
         entry: './custom-authorizer.ts',
       }),
       timeToLiveInSeconds: 300,
+    },
+    apiKeyAuthorizationMode: {
+      expiresInDays: 3,
     },
   },
 });
