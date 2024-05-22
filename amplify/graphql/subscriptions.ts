@@ -56,11 +56,12 @@ export const onCreatePrefs = /* GraphQL */ `subscription OnCreatePrefs(
 ) {
   onCreatePrefs(filter: $filter, owner: $owner) {
     createdAt
+    fullName
     gptApiKey
+    hasApiKey
     id
     owner
     updatedAt
-    useAwsAI
     __typename
   }
 }
@@ -133,11 +134,12 @@ export const onDeletePrefs = /* GraphQL */ `subscription OnDeletePrefs(
 ) {
   onDeletePrefs(filter: $filter, owner: $owner) {
     createdAt
+    fullName
     gptApiKey
+    hasApiKey
     id
     owner
     updatedAt
-    useAwsAI
     __typename
   }
 }
@@ -210,11 +212,12 @@ export const onUpdatePrefs = /* GraphQL */ `subscription OnUpdatePrefs(
 ) {
   onUpdatePrefs(filter: $filter, owner: $owner) {
     createdAt
+    fullName
     gptApiKey
+    hasApiKey
     id
     owner
     updatedAt
-    useAwsAI
     __typename
   }
 }

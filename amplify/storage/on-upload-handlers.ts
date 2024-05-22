@@ -8,7 +8,7 @@ import { env } from "$amplify/env/on-upload-handlers";
 import { Amplify } from 'aws-amplify';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../data/resource';
-import { createCvTexts } from "./graphql/mutations";
+import { createCvTexts } from "../graphql/mutations";
 
 Amplify.configure(
   {

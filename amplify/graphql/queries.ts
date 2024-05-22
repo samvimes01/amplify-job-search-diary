@@ -8,6 +8,13 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
+export const generateCover = /* GraphQL */ `query GenerateCover($prompt: String!) {
+  generateCover(prompt: $prompt)
+}
+` as GeneratedQuery<
+  APITypes.GenerateCoverQueryVariables,
+  APITypes.GenerateCoverQuery
+>;
 export const getCvTexts = /* GraphQL */ `query GetCvTexts($id: ID!) {
   getCvTexts(id: $id) {
     createdAt
@@ -47,11 +54,12 @@ export const getJobItem = /* GraphQL */ `query GetJobItem($id: ID!) {
 export const getPrefs = /* GraphQL */ `query GetPrefs($id: ID!) {
   getPrefs(id: $id) {
     createdAt
+    fullName
     gptApiKey
+    hasApiKey
     id
     owner
     updatedAt
-    useAwsAI
     __typename
   }
 }
@@ -127,11 +135,12 @@ export const listPrefs = /* GraphQL */ `query ListPrefs(
   listPrefs(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       createdAt
+      fullName
       gptApiKey
+      hasApiKey
       id
       owner
       updatedAt
-      useAwsAI
       __typename
     }
     nextToken

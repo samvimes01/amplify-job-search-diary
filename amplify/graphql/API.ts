@@ -31,11 +31,12 @@ export type JobItem = {
 export type Prefs = {
   __typename: "Prefs",
   createdAt: string,
+  fullName?: string | null,
   gptApiKey?: string | null,
+  hasApiKey?: boolean | null,
   id: string,
   owner?: string | null,
   updatedAt: string,
-  useAwsAI?: boolean | null,
 };
 
 export type Todo = {
@@ -148,13 +149,14 @@ export type ModelJobItemConnection = {
 export type ModelPrefsFilterInput = {
   and?: Array< ModelPrefsFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
+  fullName?: ModelStringInput | null,
   gptApiKey?: ModelStringInput | null,
+  hasApiKey?: ModelBooleanInput | null,
   id?: ModelIDInput | null,
   not?: ModelPrefsFilterInput | null,
   or?: Array< ModelPrefsFilterInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  useAwsAI?: ModelBooleanInput | null,
 };
 
 export type ModelBooleanInput = {
@@ -237,18 +239,20 @@ export type CreateJobItemInput = {
 export type ModelPrefsConditionInput = {
   and?: Array< ModelPrefsConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
+  fullName?: ModelStringInput | null,
   gptApiKey?: ModelStringInput | null,
+  hasApiKey?: ModelBooleanInput | null,
   not?: ModelPrefsConditionInput | null,
   or?: Array< ModelPrefsConditionInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  useAwsAI?: ModelBooleanInput | null,
 };
 
 export type CreatePrefsInput = {
+  fullName?: string | null,
   gptApiKey?: string | null,
+  hasApiKey?: boolean | null,
   id?: string | null,
-  useAwsAI?: boolean | null,
 };
 
 export type ModelTodoConditionInput = {
@@ -302,9 +306,10 @@ export type UpdateJobItemInput = {
 };
 
 export type UpdatePrefsInput = {
+  fullName?: string | null,
   gptApiKey?: string | null,
+  hasApiKey?: boolean | null,
   id: string,
-  useAwsAI?: boolean | null,
 };
 
 export type UpdateTodoInput = {
@@ -373,12 +378,13 @@ export type ModelSubscriptionJobItemFilterInput = {
 export type ModelSubscriptionPrefsFilterInput = {
   and?: Array< ModelSubscriptionPrefsFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
+  fullName?: ModelSubscriptionStringInput | null,
   gptApiKey?: ModelSubscriptionStringInput | null,
+  hasApiKey?: ModelSubscriptionBooleanInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionPrefsFilterInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  useAwsAI?: ModelSubscriptionBooleanInput | null,
 };
 
 export type ModelSubscriptionBooleanInput = {
@@ -394,6 +400,14 @@ export type ModelSubscriptionTodoFilterInput = {
   or?: Array< ModelSubscriptionTodoFilterInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
+};
+
+export type GenerateCoverQueryVariables = {
+  prompt: string,
+};
+
+export type GenerateCoverQuery = {
+  generateCover?: string | null,
 };
 
 export type GetCvTextsQueryVariables = {
@@ -442,11 +456,12 @@ export type GetPrefsQuery = {
   getPrefs?:  {
     __typename: "Prefs",
     createdAt: string,
+    fullName?: string | null,
     gptApiKey?: string | null,
+    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
-    useAwsAI?: boolean | null,
   } | null,
 };
 
@@ -527,11 +542,12 @@ export type ListPrefsQuery = {
     items:  Array< {
       __typename: "Prefs",
       createdAt: string,
+      fullName?: string | null,
       gptApiKey?: string | null,
+      hasApiKey?: boolean | null,
       id: string,
       owner?: string | null,
       updatedAt: string,
-      useAwsAI?: boolean | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -607,11 +623,12 @@ export type CreatePrefsMutation = {
   createPrefs?:  {
     __typename: "Prefs",
     createdAt: string,
+    fullName?: string | null,
     gptApiKey?: string | null,
+    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
-    useAwsAI?: boolean | null,
   } | null,
 };
 
@@ -680,11 +697,12 @@ export type DeletePrefsMutation = {
   deletePrefs?:  {
     __typename: "Prefs",
     createdAt: string,
+    fullName?: string | null,
     gptApiKey?: string | null,
+    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
-    useAwsAI?: boolean | null,
   } | null,
 };
 
@@ -753,11 +771,12 @@ export type UpdatePrefsMutation = {
   updatePrefs?:  {
     __typename: "Prefs",
     createdAt: string,
+    fullName?: string | null,
     gptApiKey?: string | null,
+    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
-    useAwsAI?: boolean | null,
   } | null,
 };
 
@@ -826,11 +845,12 @@ export type OnCreatePrefsSubscription = {
   onCreatePrefs?:  {
     __typename: "Prefs",
     createdAt: string,
+    fullName?: string | null,
     gptApiKey?: string | null,
+    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
-    useAwsAI?: boolean | null,
   } | null,
 };
 
@@ -899,11 +919,12 @@ export type OnDeletePrefsSubscription = {
   onDeletePrefs?:  {
     __typename: "Prefs",
     createdAt: string,
+    fullName?: string | null,
     gptApiKey?: string | null,
+    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
-    useAwsAI?: boolean | null,
   } | null,
 };
 
@@ -972,11 +993,12 @@ export type OnUpdatePrefsSubscription = {
   onUpdatePrefs?:  {
     __typename: "Prefs",
     createdAt: string,
+    fullName?: string | null,
     gptApiKey?: string | null,
+    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
-    useAwsAI?: boolean | null,
   } | null,
 };
 

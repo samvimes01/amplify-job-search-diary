@@ -56,11 +56,12 @@ export const createPrefs = /* GraphQL */ `mutation CreatePrefs(
 ) {
   createPrefs(condition: $condition, input: $input) {
     createdAt
+    fullName
     gptApiKey
+    hasApiKey
     id
     owner
     updatedAt
-    useAwsAI
     __typename
   }
 }
@@ -133,11 +134,12 @@ export const deletePrefs = /* GraphQL */ `mutation DeletePrefs(
 ) {
   deletePrefs(condition: $condition, input: $input) {
     createdAt
+    fullName
     gptApiKey
+    hasApiKey
     id
     owner
     updatedAt
-    useAwsAI
     __typename
   }
 }
@@ -210,11 +212,12 @@ export const updatePrefs = /* GraphQL */ `mutation UpdatePrefs(
 ) {
   updatePrefs(condition: $condition, input: $input) {
     createdAt
+    fullName
     gptApiKey
+    hasApiKey
     id
     owner
     updatedAt
-    useAwsAI
     __typename
   }
 }
