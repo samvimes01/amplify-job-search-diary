@@ -9,10 +9,9 @@ function App() {
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
-        <h1>Applied jobs</h1>
+        <h1>Jobs</h1>
         <Button
           variation="primary"
-          colorTheme="success"
           onClick={() => navigate("jobs/new")}
           minWidth="fit-content"
         >

@@ -61,14 +61,17 @@ function Profile() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <Label htmlFor="gpt_api_key">OpenAI API key (temporary not used):</Label>
+          <Label htmlFor="gpt_api_key">
+            OpenAI API key (temporary not used):
+          </Label>
           <Input
             id="gpt_api_key"
             name="gpt_api_key"
             value={key}
+            disabled
             onChange={(e) => setApiKey(e.target.value)}
           />
-          <Button onClick={onSave} maxWidth="fit-content">
+          <Button onClick={onSave} maxWidth="fit-content" variation="primary">
             Save
           </Button>
           <br />

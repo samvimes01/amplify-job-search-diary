@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Flex,
   Grid,
@@ -11,10 +12,10 @@ import {
   View,
 } from "@aws-amplify/ui-react";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { Snackbar } from "@mui/material";
+import Snackbar from "@mui/material/Snackbar";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import FileList from "../components/FileList";
 import { useAmplifyClient } from "../store";
 import { JobItem } from "../store/interface";
@@ -44,6 +45,7 @@ function Job() {
       ...jobItem,
     },
   });
+  const navigate = useNavigate();
   const client = useAmplifyClient((state) => state.client);
   const getCvText = useAmplifyClient((state) => state.getCvText);
   const createJob = useAmplifyClient((state) => state.createJob);
@@ -52,7 +54,7 @@ function Job() {
 
   const [cvFile, setCvFile] = useState<string>("");
   const [cvContents, setCvContents] = useState<string>("");
-  const [toast, setToast] = useState<boolean>(false);
+  const [toast, setToast] = useState<string>("");
   const [generating, setGenerating] = useState<boolean>(false);
 
   const { cvText, name, description } = useWatch({ control });
@@ -66,13 +68,14 @@ function Job() {
     setValue("cvFile", path);
     setCvFile(path);
   };
-  const onSubmit: SubmitHandler<JobItem> = (data) => {
+  const onSubmit: SubmitHandler<JobItem> = async (data) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if ((jobItem as any)?.id) {
-      updateJob(data);
+    const saveFn = (jobItem as any)?.id ? updateJob : createJob;
+    const { id, error } = await saveFn(data);
+    setToast(error ? error : "Job Saved");
+    if (id) {
+      navigate(`/jobs/${id}`);
     }
-    createJob(data);
-    setToast(true);
   };
 
   const handleToastClose = (
@@ -82,7 +85,7 @@ function Job() {
     if (reason === "clickaway") {
       return;
     }
-    setToast(false);
+    setToast("");
   };
 
   const generateCover = async () => {
@@ -163,7 +166,7 @@ function Job() {
                   </Button>
                 </Flex>
                 <TextAreaField
-                  rows={5}
+                  rows={8}
                   label=""
                   value={getValues("coverLetterText")}
                   {...register("coverLetterText")}
@@ -193,6 +196,7 @@ function Job() {
               <Button
                 type="submit"
                 variation="primary"
+                colorTheme="success"
                 gap="0.4rem"
                 disabled={!getValues("name")}
               >
@@ -217,11 +221,14 @@ function Job() {
         </View>
       </Grid>
       <Snackbar
-        open={toast}
+        open={!!toast}
         autoHideDuration={3000}
         onClose={handleToastClose}
-        message="Job Saved"
-      />
+      >
+        <Alert variation={toast && toast == "Job Saved" ? "success" : "error"}>
+          {toast}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

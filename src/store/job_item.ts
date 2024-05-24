@@ -2,8 +2,8 @@ import { StateCreator } from 'zustand';
 import { ClientSlice, JobItem } from './interface';
 
 export interface JobItemSlice {
-  createJob: (content: JobItem) => void;
-  updateJob: (content: JobItem) => void;
+  createJob: (content: JobItem) => Promise<{ id: string; error: string }>;
+  updateJob: (content: JobItem) => Promise<{ id: string; error: string }>;
   getCvText: (file: string) => Promise<string>;
 }
 
@@ -22,16 +22,18 @@ export const createJobSlice: StateCreator<
   [],
   [],
   JobItemSlice
-> = (set, get) => ({
-  createJob: (c: JobItem) => set(({ client }) => {
-    client.models.JobItem.create({ 
+> = (_, get) => ({
+  createJob: async (c: JobItem) => {
+    const client = get().client;
+    const { data, errors } = await client.models.JobItem.create({ 
       ...c,
       createdAt: dateFormatter(new Date()),
      });
-    return { client };
-  }),
-  updateJob: (c: JobItem) => set(({ client }) => {
-    client.models.JobItem.update({
+    return { id: data?.id || "", error: errors?.[0].message ?? "" }
+  },
+  updateJob: async (c: JobItem) => {
+    const client = get().client;
+    const { data, errors } = await client.models.JobItem.update({
       id: c.id, 
       company: c.company,
       name: c.name,
@@ -43,8 +45,8 @@ export const createJobSlice: StateCreator<
       status: c.status,
       createdAt: c.createdAt,
      });
-    return { client };
-  }),
+    return { id: data?.id || "", error: errors?.[0].message ?? "" }
+  },
   getCvText: async (file: string) => {
     const client = get().client;
     

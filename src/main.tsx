@@ -37,10 +37,10 @@ Amplify.configure({
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#7551c2",
+      main: "#c27551",
     },
     secondary: {
-      main: "#f50057",
+      main: "#00C9A9",
     },
   },
 });

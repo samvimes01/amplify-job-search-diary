@@ -2,7 +2,6 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import AdbIcon from "@mui/icons-material/Adb";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -77,7 +76,7 @@ function NavBar() {
                   height="48px"
                   src={Logo}
                   alt="logo"
-                  style={{ objectFit: "contain", filter: "contrast(500%)" }}
+                  style={{ objectFit: "contain", filter: "contrast(200%)" }}
                 />
               </Box>
             </Link>
@@ -114,9 +113,9 @@ function NavBar() {
               {pages.map((page) => (
                 <MenuItem key={page.label} onClick={handleCloseNavMenu}>
                   <Link to={page.href}>
-                    <Typography className="noDecor" textAlign="center">
-                      {page.label}
-                    </Typography>
+                    <Button>
+                      <Typography textAlign="center">{page.label}</Typography>
+                    </Button>
                   </Link>
                 </MenuItem>
               ))}
@@ -137,7 +136,22 @@ function NavBar() {
             }}
           >
             <Link to="/" style={{ color: "white" }}>
-              <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+              <Box
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                  mr: 1,
+                  maxHeight: "64px",
+                  maxWidth: "64px",
+                }}
+              >
+                <img
+                  width="48px"
+                  height="48px"
+                  src={Logo}
+                  alt="logo"
+                  style={{ objectFit: "contain", filter: "contrast(200%)" }}
+                />
+              </Box>
             </Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -182,7 +196,9 @@ function NavBar() {
             >
               <MenuItem onClick={handleCloseNavMenu}>
                 <Link to="profile">
-                  <Typography textAlign="center">Profile</Typography>
+                  <Button>
+                    <Typography textAlign="center">Profile</Typography>
+                  </Button>
                 </Link>
               </MenuItem>
               <Divider />
