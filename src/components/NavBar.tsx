@@ -17,8 +17,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-
-import "./NavBar.css";
+import Logo from "../assets/logo.png";
 
 const pages = [{ label: "Dashboard", href: "/" }];
 
@@ -65,7 +64,22 @@ function NavBar() {
             }}
           >
             <Link to="/" style={{ color: "white" }}>
-              <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+              <Box
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                  mr: 1,
+                  maxHeight: "64px",
+                  maxWidth: "64px",
+                }}
+              >
+                <img
+                  width="48px"
+                  height="48px"
+                  src={Logo}
+                  alt="logo"
+                  style={{ objectFit: "contain", filter: "contrast(500%)" }}
+                />
+              </Box>
             </Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -100,7 +114,7 @@ function NavBar() {
               {pages.map((page) => (
                 <MenuItem key={page.label} onClick={handleCloseNavMenu}>
                   <Link to={page.href}>
-                    <Typography className="btn_link" textAlign="center">
+                    <Typography className="noDecor" textAlign="center">
                       {page.label}
                     </Typography>
                   </Link>
@@ -134,7 +148,7 @@ function NavBar() {
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 <Link
-                  className="btn_link"
+                  className="noDecor"
                   to={page.href}
                   style={{ color: "#fff" }}
                 >

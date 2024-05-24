@@ -1,48 +1,25 @@
+import { Button, Flex } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import type { Schema } from "../amplify/data/resource";
-import { useAmplifyClient } from "./store";
+import { useNavigate } from "react-router-dom";
+import JobList from "./components/JobList";
 
 function App() {
-  const client = useAmplifyClient((state) => state.client);
-  const createTodo = useAmplifyClient((state) => state.createTodo);
-  const deleteTodo = useAmplifyClient((state) => state.deleteTodo);
-
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
-
-  useEffect(() => {
-    const sub = client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
-    return () => sub.unsubscribe();
-  }, [client]);
-
-  function addTodo() {
-    const content = window.prompt("Todo content");
-    if (!content) return;
-    createTodo(content);
-  }
+  const navigate = useNavigate();
 
   return (
     <>
-      <Link to="job/new">Add a new Job</Link>
-      <h1>My todos</h1>
-      <button onClick={addTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li onClick={() => deleteTodo(todo.id)} key={todo.id}>
-            {todo.content}
-          </li>
-        ))}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
-        </a>
-      </div>
+      <Flex justifyContent="space-between" alignItems="center">
+        <h1>Applied jobs</h1>
+        <Button
+          variation="primary"
+          colorTheme="success"
+          onClick={() => navigate("job/new")}
+          minWidth="fit-content"
+        >
+          Add a new Job
+        </Button>
+      </Flex>
+      <JobList />
     </>
   );
 }

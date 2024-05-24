@@ -2,7 +2,6 @@ import { Flex, Text } from "@aws-amplify/ui-react";
 import { ListPaginateWithPathOutput, list } from "aws-amplify/storage";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import "./FileList.css";
 import FileUpload from "./FileUpload";
 
 const FileList = ({
@@ -47,7 +46,7 @@ const FileList = ({
           <li
             key={index}
             onClick={() => onClick(file.path)}
-            className={clsx({ active: selected == file.path })}
+            className={clsx({ activeItem: selected == file.path })}
           >
             <strong>{file.path.split("cvs/")[1]}</strong>
             <Text>

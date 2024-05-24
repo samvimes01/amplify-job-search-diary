@@ -61,7 +61,7 @@ function Profile() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <Label htmlFor="gpt_api_key">OpenAI API key:</Label>
+          <Label htmlFor="gpt_api_key">OpenAI API key (temporary not used):</Label>
           <Input
             id="gpt_api_key"
             name="gpt_api_key"

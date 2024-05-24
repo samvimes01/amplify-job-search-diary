@@ -5,6 +5,8 @@ import {
   Icon,
   Input,
   Label,
+  Radio,
+  RadioGroupField,
   TextAreaField,
   View,
 } from "@aws-amplify/ui-react";
@@ -12,7 +14,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import FileList from "../components/FileList";
 import { useAmplifyClient } from "../store";
-import { JobItem } from "../store/job_item";
+import { JobItem } from "../store/interface";
 
 const IconSave = () => {
   return (
@@ -78,7 +80,6 @@ function Job() {
     }
   };
 
-
   return (
     <>
       <Grid
@@ -97,7 +98,14 @@ function Job() {
                 readOnly
               />
               <div>
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="company">Company</Label>
+                <Input id="company" {...register("company")} />
+              </div>
+
+              <div>
+                <Label htmlFor="name">
+                  Name<sup>*</sup>
+                </Label>
                 <Input id="name" {...register("name", { required: true })} />
                 {errors.name && <span>This field is required</span>}
               </div>
@@ -111,7 +119,7 @@ function Job() {
               <TextAreaField rows={5} label="CV Text" {...register("cvText")} />
               <TextAreaField
                 rows={5}
-                label="Cover Letter"
+                label="Cover Letter (fill name, description and cv to generate)"
                 value={getValues("coverLetterText")}
                 {...register("coverLetterText")}
               />
@@ -124,7 +132,24 @@ function Job() {
                 Generate Cover Letter
               </Button>
 
-              <Button type="submit" variation="primary" gap="0.4rem">
+              <RadioGroupField
+                legend="Status: "
+                direction="row"
+                defaultValue="created"
+                {...register("status")}
+              >
+                <Radio value="created">Created</Radio>
+                <Radio value="applied">Applied</Radio>
+                <Radio value="inprocess">In process</Radio>
+                <Radio value="rejected">Rejected</Radio>
+              </RadioGroupField>
+
+              <Button
+                type="submit"
+                variation="primary"
+                gap="0.4rem"
+                disabled={!getValues("name")}
+              >
                 <IconSave /> Save
               </Button>
             </Flex>

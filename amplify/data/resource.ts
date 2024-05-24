@@ -22,11 +22,6 @@ const schema = a.schema({
     .returns(a.string())
     .authorization((allow) => [allow.authenticated()])
     .handler(a.handler.function(mistralCoverLetter)),
-  Todo: a
-    .model({
-      content: a.string(),
-    })
-    .authorization((allow) => [allow.owner()]),
   Prefs: a
     .model({
       gptApiKey: a.string(),
@@ -35,6 +30,7 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.owner()]),
   JobItem: a.model({
+    company: a.string(),
     name: a.string().required(),
     description: a.string(),
     createdAt: a.date().required(),

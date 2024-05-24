@@ -1,27 +1,15 @@
 import { StateCreator } from 'zustand';
-import { ClientSlice } from './interface';
+import { ClientSlice, JobItem } from './interface';
 
-export type JobItem = {
-  name: string;
-  description: string;
-  appliedAt: Date;
-  coverLetterText: string;
-  cvFile: string;
-  cvText: string;
-  status: string;
-  reply: string;
-};
-
-export interface JobSlice {
+export interface JobItemSlice {
   createJob: (content: JobItem) => void;
-  deleteJob: (id: string) => void;
   getCvText: (file: string) => Promise<string>;
 }
 export const createJobSlice: StateCreator<
-  ClientSlice & JobSlice,
+  ClientSlice & JobItemSlice,
   [],
   [],
-  JobSlice
+  JobItemSlice
 > = (set, get) => ({
   createJob: (c: JobItem) => set(({ client }) => {
     client.models.JobItem.create({ 
@@ -29,10 +17,6 @@ export const createJobSlice: StateCreator<
       createdAt: new Date().toUTCString(),
       appliedAt: c.appliedAt ? c.appliedAt.toUTCString() : "",
      });
-    return { client };
-  }),
-  deleteJob: (id: string) => set(({ client }) => {
-    client.models.JobItem.delete({ id });
     return { client };
   }),
   getCvText: async (file: string) => {
