@@ -12,6 +12,7 @@ import {
 } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { useLoaderData } from "react-router-dom";
 import FileList from "../components/FileList";
 import { useAmplifyClient } from "../store";
 import { JobItem } from "../store/interface";
@@ -26,6 +27,7 @@ const IconSave = () => {
 };
 
 function Job() {
+  const jobItem = useLoaderData() as JobItem;
   const {
     register,
     handleSubmit,
@@ -33,23 +35,19 @@ function Job() {
     getValues,
     control,
     formState: { errors },
-  } = useForm<JobItem>();
-  const hasOpenAiKey = useAmplifyClient((state) => state.hasOpenAiKey);
+  } = useForm<JobItem>({
+    defaultValues: jobItem,
+  });
+  const client = useAmplifyClient((state) => state.client);
   const getCvText = useAmplifyClient((state) => state.getCvText);
   const createJob = useAmplifyClient((state) => state.createJob);
   const getPrefs = useAmplifyClient((state) => state.getPrefs);
 
-  const [hasGPT, setHasGPT] = useState(false);
-  useEffect(() => {
-    hasOpenAiKey()
-      .then((has) => setHasGPT(!!has))
-      .catch(console.error);
-  }, [hasOpenAiKey]);
-  const { cvText, name, description } = useWatch({ control });
-  const hasGPTValues = !!cvText && !!name && !!description;
-
   const [cvFile, setCvFile] = useState<string>("");
   const [cvContents, setCvContents] = useState<string>("");
+
+  const { cvText, name, description } = useWatch({ control });
+  const hasGPTValues = !!cvText && !!name && !!description;
 
   useEffect(() => {
     getCvText(cvFile).then(setCvContents).catch(console.error);
@@ -62,7 +60,6 @@ function Job() {
   const onSubmit: SubmitHandler<JobItem> = (data) => {
     createJob(data);
   };
-  const client = useAmplifyClient((state) => state.client);
 
   const generateCover = async () => {
     const { name: userName } = await getPrefs();
@@ -79,6 +76,7 @@ function Job() {
       setValue("coverLetterText", data);
     }
   };
+  const statuses = client.enums.JobStatus.values();
 
   return (
     <>
@@ -126,7 +124,7 @@ function Job() {
 
               <Button
                 type="button"
-                disabled={!hasGPT || !hasGPTValues}
+                disabled={!hasGPTValues}
                 onClick={generateCover}
               >
                 Generate Cover Letter
@@ -138,10 +136,11 @@ function Job() {
                 defaultValue="created"
                 {...register("status")}
               >
-                <Radio value="created">Created</Radio>
-                <Radio value="applied">Applied</Radio>
-                <Radio value="inprocess">In process</Radio>
-                <Radio value="rejected">Rejected</Radio>
+                {statuses.map((s) => (
+                  <Radio key={s} value={s}>
+                    {s}
+                  </Radio>
+                ))}
               </RadioGroupField>
 
               <Button

@@ -13,7 +13,7 @@ function App() {
         <Button
           variation="primary"
           colorTheme="success"
-          onClick={() => navigate("job/new")}
+          onClick={() => navigate("jobs/new")}
           minWidth="fit-content"
         >
           Add a new Job

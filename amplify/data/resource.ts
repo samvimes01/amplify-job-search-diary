@@ -29,17 +29,18 @@ const schema = a.schema({
       fullName: a.string(),
     })
     .authorization((allow) => [allow.owner()]),
+  JobStatus: a.enum(['new', 'applied', 'interview', 'rejected', 'offer']),
   JobItem: a.model({
     company: a.string(),
     name: a.string().required(),
     description: a.string(),
+    link: a.string(),
     createdAt: a.date().required(),
     appliedAt: a.date(),
     coverLetterText: a.string(),
     cvFile: a.string(),
     cvText: a.string(),
-    status: a.string(),
-    reply: a.string(),
+    status: a.ref('JobStatus'),
   })
     .authorization((allow) => [allow.owner()]),
   CvTexts: a.model({

@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  LoaderFunction,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
 
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -13,6 +18,7 @@ import "./index.css";
 import ErrorPage from "./pages/Error.tsx";
 import Job from "./pages/Job.tsx";
 import Profile from "./pages/Profile.tsx";
+import { getJobLoader } from "./store/index.ts";
 
 Amplify.configure(outputs);
 const existingConfig = Amplify.getConfig();
@@ -26,6 +32,7 @@ Amplify.configure({
     },
   },
 });
+
 
 const theme = createTheme({
   palette: {
@@ -53,11 +60,13 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "job/new",
+        path: "jobs/new",
         element: <Job />,
       },
       {
-        path: "job/:jobId",
+        path: "jobs/:id",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        loader: getJobLoader as unknown as LoaderFunction<any>,
         element: <Job />,
       },
     ],
@@ -86,6 +95,15 @@ function Layout() {
       </main>
     </div>
   ) : (
-    <Authenticator />
+    <div
+      style={{
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Authenticator />
+    </div>
   );
 }

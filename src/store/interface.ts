@@ -13,6 +13,6 @@ export type JobItem = {
   coverLetterText: string;
   cvFile: string;
   cvText: string;
-  status: string;
+  status: 'new' | 'applied' | 'interview' | 'rejected' | 'offer';
   reply: string;
 };

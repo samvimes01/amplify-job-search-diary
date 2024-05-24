@@ -6,6 +6,7 @@ import { JobItemSlice, createJobSlice } from './job_item';
 import { JobsSlice, createJobsSlice } from './jobs';
 import { ProfileSlice, createProfileSlice } from './profile';
 
+export const client = generateClient<Schema>({ authMode: "userPool" });
 
 export const useAmplifyClient = create<ClientSlice & JobsSlice & ProfileSlice & JobItemSlice>((...a) => ({
   client: generateClient<Schema>({ authMode: "userPool" }),
@@ -14,3 +15,8 @@ export const useAmplifyClient = create<ClientSlice & JobsSlice & ProfileSlice & 
   ...createJobSlice(...a),
 }))
 
+
+export async function getJobLoader({params}: {params: {id: string}}) {
+  const { data } = await client.models.JobItem.get({ id: params.id });
+  return data
+}

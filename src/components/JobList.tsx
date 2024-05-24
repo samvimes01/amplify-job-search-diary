@@ -20,6 +20,11 @@ const JobList = () => {
 
   const [jobs, setJobs] = useState<Array<Schema["JobItem"]["type"]>>([]);
 
+  const deleteItem = async (id: string) => {
+    await deleteJob(id);
+    setJobs(jobs.filter((j) => j.id !== id));
+  };
+
   useEffect(() => {
     getJobs().then((jobs) => setJobs(jobs));
   }, [getJobs]);
@@ -39,7 +44,7 @@ const JobList = () => {
         </TableHead>
         <TableBody>
           {jobs.map((j) => (
-            <TableRow>
+            <TableRow key={`${j.id}`}>
               <TableCell>{j.company}</TableCell>
               <TableCell>{j.name}</TableCell>
               <TableCell>{j.status}</TableCell>
@@ -48,22 +53,14 @@ const JobList = () => {
                   <Button
                     variation="primary"
                     colorTheme="error"
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          `Do you really want to delete ${j.name}?`
-                        )
-                      ) {
-                        deleteJob(j.id);
-                      }
-                    }}
+                    onClick={() => deleteItem(j.id)}
                   >
                     Delete
                   </Button>
                   <Button
                     variation="primary"
                     colorTheme="info"
-                    onClick={() => navigate(j.id)}
+                    onClick={() => navigate(`jobs/${j.id}`)}
                   >
                     Edit
                   </Button>
