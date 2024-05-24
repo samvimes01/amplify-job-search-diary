@@ -2,7 +2,7 @@ import { Buffer } from 'node:buffer';
 
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import type { S3Handler } from 'aws-lambda';
-import officeParser from 'officeparser';
+import { getTextExtractor } from 'office-text-extractor'
 
 import { env } from "$amplify/env/on-upload-handlers";
 import { Amplify } from 'aws-amplify';
@@ -38,9 +38,10 @@ export const handler: S3Handler = async (event): Promise<void> => {
     if (!response.Body) {
       throw new Error('No body in response getting s3 object');
     }
-
+    
     const fileBuffers = await response.Body.transformToByteArray()
-    const text = await officeParser.parseOfficeAsync(Buffer.from(fileBuffers), { tempFilesLocation: "/tmp" });
+    const extractor = getTextExtractor()
+    const text = await extractor.extractText({ input: Buffer.from(fileBuffers), type: 'buffer' })
 
     await client.graphql({
       query: createCvTexts,

@@ -20,7 +20,7 @@
     "aws-amplify": "6.3.2",
     "aws-lambda": "1.0.7",
     "clsx": "2.1.1",
-    "officeparser": "4.1.1",
+    "office-text-extractor": "3.0.3",
     "openai": "4.47.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
