@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  Link,
   Table,
   TableBody,
   TableCell,
@@ -8,6 +9,7 @@ import {
   TableRow,
   Text,
 } from "@aws-amplify/ui-react";
+import LinkIcon from "@mui/icons-material/Link";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Schema } from "../../amplify/data/resource";
@@ -46,7 +48,14 @@ const JobList = () => {
           {jobs.map((j) => (
             <TableRow key={`${j.id}`}>
               <TableCell>{j.company}</TableCell>
-              <TableCell>{j.name}</TableCell>
+              <TableCell>
+                <div>{j.name} </div>
+                {j.link && (
+                  <Link href={j.link}>
+                    <LinkIcon />
+                  </Link>
+                )}
+              </TableCell>
               <TableCell>{j.status}</TableCell>
               <TableCell>
                 <Flex gap="2rem">

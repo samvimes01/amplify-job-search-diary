@@ -9,10 +9,12 @@ export type JobItem = {
   company: string;
   name: string;
   description: string;
-  appliedAt: Date;
+  createdAt: string;
   coverLetterText: string;
   cvFile: string;
   cvText: string;
   status: 'new' | 'applied' | 'interview' | 'rejected' | 'offer';
   reply: string;
+  link: string;
+  id: string;
 };

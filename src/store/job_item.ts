@@ -3,6 +3,7 @@ import { ClientSlice, JobItem } from './interface';
 
 export interface JobItemSlice {
   createJob: (content: JobItem) => void;
+  updateJob: (content: JobItem) => void;
   getCvText: (file: string) => Promise<string>;
 }
 
@@ -26,7 +27,21 @@ export const createJobSlice: StateCreator<
     client.models.JobItem.create({ 
       ...c,
       createdAt: dateFormatter(new Date()),
-      appliedAt: dateFormatter(c.appliedAt || new Date()),
+     });
+    return { client };
+  }),
+  updateJob: (c: JobItem) => set(({ client }) => {
+    client.models.JobItem.update({
+      id: c.id, 
+      company: c.company,
+      name: c.name,
+      description: c.description,
+      link: c.link,
+      coverLetterText: c.coverLetterText,
+      cvFile: c.cvFile,
+      cvText: c.cvText,
+      status: c.status,
+      createdAt: c.createdAt,
      });
     return { client };
   }),

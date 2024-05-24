@@ -36,7 +36,6 @@ const schema = a.schema({
     description: a.string(),
     link: a.string(),
     createdAt: a.date().required(),
-    appliedAt: a.date(),
     coverLetterText: a.string(),
     cvFile: a.string(),
     cvText: a.string(),

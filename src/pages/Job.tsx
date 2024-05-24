@@ -10,6 +10,8 @@ import {
   TextAreaField,
   View,
 } from "@aws-amplify/ui-react";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Snackbar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router-dom";
@@ -36,15 +38,22 @@ function Job() {
     control,
     formState: { errors },
   } = useForm<JobItem>({
-    defaultValues: jobItem,
+    defaultValues: {
+      // @ts-expect-error spread
+      status: "new",
+      ...jobItem,
+    },
   });
   const client = useAmplifyClient((state) => state.client);
   const getCvText = useAmplifyClient((state) => state.getCvText);
   const createJob = useAmplifyClient((state) => state.createJob);
+  const updateJob = useAmplifyClient((state) => state.updateJob);
   const getPrefs = useAmplifyClient((state) => state.getPrefs);
 
   const [cvFile, setCvFile] = useState<string>("");
   const [cvContents, setCvContents] = useState<string>("");
+  const [toast, setToast] = useState<boolean>(false);
+  const [generating, setGenerating] = useState<boolean>(false);
 
   const { cvText, name, description } = useWatch({ control });
   const hasGPTValues = !!cvText && !!name && !!description;
@@ -58,10 +67,26 @@ function Job() {
     setCvFile(path);
   };
   const onSubmit: SubmitHandler<JobItem> = (data) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((jobItem as any)?.id) {
+      updateJob(data);
+    }
     createJob(data);
+    setToast(true);
+  };
+
+  const handleToastClose = (
+    _: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setToast(false);
   };
 
   const generateCover = async () => {
+    setGenerating(true);
     const { name: userName } = await getPrefs();
     const { cvText, name, description } = getValues();
     const { data } = await client.queries.generateCover({
@@ -74,6 +99,7 @@ function Job() {
     });
     if (data) {
       setValue("coverLetterText", data);
+      setGenerating(false);
     }
   };
   const statuses = client.enums.JobStatus.values();
@@ -108,6 +134,11 @@ function Job() {
                 {errors.name && <span>This field is required</span>}
               </div>
 
+              <div>
+                <Label htmlFor="link">Job link</Label>
+                <Input id="link" {...register("link")} />
+              </div>
+
               <TextAreaField
                 rows={5}
                 label="Description"
@@ -115,16 +146,33 @@ function Job() {
               />
 
               <TextAreaField rows={5} label="CV Text" {...register("cvText")} />
-              <TextAreaField
-                rows={5}
-                label="Cover Letter (fill name, description and cv to generate)"
-                value={getValues("coverLetterText")}
-                {...register("coverLetterText")}
-              />
+              <div>
+                <Flex justifyContent="space-between" alignItems="center">
+                  <Label htmlFor="coverLetterText">
+                    Cover Letter (from name, description and CV)
+                  </Label>
+                  <Button
+                    size="small"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        getValues("coverLetterText")
+                      );
+                    }}
+                  >
+                    <ContentCopyIcon fontSize="small" />
+                  </Button>
+                </Flex>
+                <TextAreaField
+                  rows={5}
+                  label=""
+                  value={getValues("coverLetterText")}
+                  {...register("coverLetterText")}
+                />
+              </div>
 
               <Button
                 type="button"
-                disabled={!hasGPTValues}
+                disabled={!hasGPTValues || generating}
                 onClick={generateCover}
               >
                 Generate Cover Letter
@@ -133,7 +181,6 @@ function Job() {
               <RadioGroupField
                 legend="Status: "
                 direction="row"
-                defaultValue="created"
                 {...register("status")}
               >
                 {statuses.map((s) => (
@@ -169,6 +216,12 @@ function Job() {
           )}
         </View>
       </Grid>
+      <Snackbar
+        open={toast}
+        autoHideDuration={3000}
+        onClose={handleToastClose}
+        message="Job Saved"
+      />
     </>
   );
 }

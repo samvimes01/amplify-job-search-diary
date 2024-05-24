@@ -32,16 +32,16 @@ export const getCvTexts = /* GraphQL */ `query GetCvTexts($id: ID!) {
 >;
 export const getJobItem = /* GraphQL */ `query GetJobItem($id: ID!) {
   getJobItem(id: $id) {
-    appliedAt
+    company
     coverLetterText
     createdAt
     cvFile
     cvText
     description
     id
+    link
     name
     owner
-    reply
     status
     updatedAt
     __typename
@@ -64,17 +64,6 @@ export const getPrefs = /* GraphQL */ `query GetPrefs($id: ID!) {
   }
 }
 ` as GeneratedQuery<APITypes.GetPrefsQueryVariables, APITypes.GetPrefsQuery>;
-export const getTodo = /* GraphQL */ `query GetTodo($id: ID!) {
-  getTodo(id: $id) {
-    content
-    createdAt
-    id
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetTodoQueryVariables, APITypes.GetTodoQuery>;
 export const listCvTexts = /* GraphQL */ `query ListCvTexts(
   $filter: ModelCvTextsFilterInput
   $limit: Int
@@ -105,16 +94,16 @@ export const listJobItems = /* GraphQL */ `query ListJobItems(
 ) {
   listJobItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      appliedAt
+      company
       coverLetterText
       createdAt
       cvFile
       cvText
       description
       id
+      link
       name
       owner
-      reply
       status
       updatedAt
       __typename
@@ -148,22 +137,3 @@ export const listPrefs = /* GraphQL */ `query ListPrefs(
   }
 }
 ` as GeneratedQuery<APITypes.ListPrefsQueryVariables, APITypes.ListPrefsQuery>;
-export const listTodos = /* GraphQL */ `query ListTodos(
-  $filter: ModelTodoFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      content
-      createdAt
-      id
-      owner
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListTodosQueryVariables, APITypes.ListTodosQuery>;

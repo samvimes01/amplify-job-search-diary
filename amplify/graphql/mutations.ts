@@ -31,16 +31,16 @@ export const createJobItem = /* GraphQL */ `mutation CreateJobItem(
   $input: CreateJobItemInput!
 ) {
   createJobItem(condition: $condition, input: $input) {
-    appliedAt
+    company
     coverLetterText
     createdAt
     cvFile
     cvText
     description
     id
+    link
     name
     owner
-    reply
     status
     updatedAt
     __typename
@@ -69,23 +69,6 @@ export const createPrefs = /* GraphQL */ `mutation CreatePrefs(
   APITypes.CreatePrefsMutationVariables,
   APITypes.CreatePrefsMutation
 >;
-export const createTodo = /* GraphQL */ `mutation CreateTodo(
-  $condition: ModelTodoConditionInput
-  $input: CreateTodoInput!
-) {
-  createTodo(condition: $condition, input: $input) {
-    content
-    createdAt
-    id
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateTodoMutationVariables,
-  APITypes.CreateTodoMutation
->;
 export const deleteCvTexts = /* GraphQL */ `mutation DeleteCvTexts(
   $condition: ModelCvTextsConditionInput
   $input: DeleteCvTextsInput!
@@ -109,16 +92,16 @@ export const deleteJobItem = /* GraphQL */ `mutation DeleteJobItem(
   $input: DeleteJobItemInput!
 ) {
   deleteJobItem(condition: $condition, input: $input) {
-    appliedAt
+    company
     coverLetterText
     createdAt
     cvFile
     cvText
     description
     id
+    link
     name
     owner
-    reply
     status
     updatedAt
     __typename
@@ -147,23 +130,6 @@ export const deletePrefs = /* GraphQL */ `mutation DeletePrefs(
   APITypes.DeletePrefsMutationVariables,
   APITypes.DeletePrefsMutation
 >;
-export const deleteTodo = /* GraphQL */ `mutation DeleteTodo(
-  $condition: ModelTodoConditionInput
-  $input: DeleteTodoInput!
-) {
-  deleteTodo(condition: $condition, input: $input) {
-    content
-    createdAt
-    id
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteTodoMutationVariables,
-  APITypes.DeleteTodoMutation
->;
 export const updateCvTexts = /* GraphQL */ `mutation UpdateCvTexts(
   $condition: ModelCvTextsConditionInput
   $input: UpdateCvTextsInput!
@@ -187,16 +153,16 @@ export const updateJobItem = /* GraphQL */ `mutation UpdateJobItem(
   $input: UpdateJobItemInput!
 ) {
   updateJobItem(condition: $condition, input: $input) {
-    appliedAt
+    company
     coverLetterText
     createdAt
     cvFile
     cvText
     description
     id
+    link
     name
     owner
-    reply
     status
     updatedAt
     __typename
@@ -224,21 +190,4 @@ export const updatePrefs = /* GraphQL */ `mutation UpdatePrefs(
 ` as GeneratedMutation<
   APITypes.UpdatePrefsMutationVariables,
   APITypes.UpdatePrefsMutation
->;
-export const updateTodo = /* GraphQL */ `mutation UpdateTodo(
-  $condition: ModelTodoConditionInput
-  $input: UpdateTodoInput!
-) {
-  updateTodo(condition: $condition, input: $input) {
-    content
-    createdAt
-    id
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateTodoMutationVariables,
-  APITypes.UpdateTodoMutation
 >;

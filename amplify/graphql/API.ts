@@ -14,19 +14,28 @@ export type CvTexts = {
 
 export type JobItem = {
   __typename: "JobItem",
-  appliedAt?: string | null,
+  company?: string | null,
   coverLetterText?: string | null,
   createdAt: string,
   cvFile?: string | null,
   cvText?: string | null,
   description?: string | null,
   id: string,
+  link?: string | null,
   name: string,
   owner?: string | null,
-  reply?: string | null,
-  status?: string | null,
+  status?: JobStatus | null,
   updatedAt: string,
 };
+
+export enum JobStatus {
+  applied = "applied",
+  interview = "interview",
+  new = "new",
+  offer = "offer",
+  rejected = "rejected",
+}
+
 
 export type Prefs = {
   __typename: "Prefs",
@@ -34,15 +43,6 @@ export type Prefs = {
   fullName?: string | null,
   gptApiKey?: string | null,
   hasApiKey?: boolean | null,
-  id: string,
-  owner?: string | null,
-  updatedAt: string,
-};
-
-export type Todo = {
-  __typename: "Todo",
-  content?: string | null,
-  createdAt: string,
   id: string,
   owner?: string | null,
   updatedAt: string,
@@ -124,20 +124,25 @@ export type ModelCvTextsConnection = {
 
 export type ModelJobItemFilterInput = {
   and?: Array< ModelJobItemFilterInput | null > | null,
-  appliedAt?: ModelStringInput | null,
+  company?: ModelStringInput | null,
   coverLetterText?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   cvFile?: ModelStringInput | null,
   cvText?: ModelStringInput | null,
   description?: ModelStringInput | null,
   id?: ModelIDInput | null,
+  link?: ModelStringInput | null,
   name?: ModelStringInput | null,
   not?: ModelJobItemFilterInput | null,
   or?: Array< ModelJobItemFilterInput | null > | null,
   owner?: ModelStringInput | null,
-  reply?: ModelStringInput | null,
-  status?: ModelStringInput | null,
+  status?: ModelJobStatusInput | null,
   updatedAt?: ModelStringInput | null,
+};
+
+export type ModelJobStatusInput = {
+  eq?: JobStatus | null,
+  ne?: JobStatus | null,
 };
 
 export type ModelJobItemConnection = {
@@ -172,23 +177,6 @@ export type ModelPrefsConnection = {
   nextToken?: string | null,
 };
 
-export type ModelTodoFilterInput = {
-  and?: Array< ModelTodoFilterInput | null > | null,
-  content?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
-  id?: ModelIDInput | null,
-  not?: ModelTodoFilterInput | null,
-  or?: Array< ModelTodoFilterInput | null > | null,
-  owner?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-};
-
-export type ModelTodoConnection = {
-  __typename: "ModelTodoConnection",
-  items:  Array<Todo | null >,
-  nextToken?: string | null,
-};
-
 export type ModelCvTextsConditionInput = {
   and?: Array< ModelCvTextsConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
@@ -208,32 +196,32 @@ export type CreateCvTextsInput = {
 
 export type ModelJobItemConditionInput = {
   and?: Array< ModelJobItemConditionInput | null > | null,
-  appliedAt?: ModelStringInput | null,
+  company?: ModelStringInput | null,
   coverLetterText?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   cvFile?: ModelStringInput | null,
   cvText?: ModelStringInput | null,
   description?: ModelStringInput | null,
+  link?: ModelStringInput | null,
   name?: ModelStringInput | null,
   not?: ModelJobItemConditionInput | null,
   or?: Array< ModelJobItemConditionInput | null > | null,
   owner?: ModelStringInput | null,
-  reply?: ModelStringInput | null,
-  status?: ModelStringInput | null,
+  status?: ModelJobStatusInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
 export type CreateJobItemInput = {
-  appliedAt?: string | null,
+  company?: string | null,
   coverLetterText?: string | null,
   createdAt: string,
   cvFile?: string | null,
   cvText?: string | null,
   description?: string | null,
   id?: string | null,
+  link?: string | null,
   name: string,
-  reply?: string | null,
-  status?: string | null,
+  status?: JobStatus | null,
 };
 
 export type ModelPrefsConditionInput = {
@@ -255,21 +243,6 @@ export type CreatePrefsInput = {
   id?: string | null,
 };
 
-export type ModelTodoConditionInput = {
-  and?: Array< ModelTodoConditionInput | null > | null,
-  content?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
-  not?: ModelTodoConditionInput | null,
-  or?: Array< ModelTodoConditionInput | null > | null,
-  owner?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-};
-
-export type CreateTodoInput = {
-  content?: string | null,
-  id?: string | null,
-};
-
 export type DeleteCvTextsInput = {
   id: string,
 };
@@ -282,10 +255,6 @@ export type DeletePrefsInput = {
   id: string,
 };
 
-export type DeleteTodoInput = {
-  id: string,
-};
-
 export type UpdateCvTextsInput = {
   file?: string | null,
   id: string,
@@ -293,27 +262,22 @@ export type UpdateCvTextsInput = {
 };
 
 export type UpdateJobItemInput = {
-  appliedAt?: string | null,
+  company?: string | null,
   coverLetterText?: string | null,
   createdAt?: string | null,
   cvFile?: string | null,
   cvText?: string | null,
   description?: string | null,
   id: string,
+  link?: string | null,
   name?: string | null,
-  reply?: string | null,
-  status?: string | null,
+  status?: JobStatus | null,
 };
 
 export type UpdatePrefsInput = {
   fullName?: string | null,
   gptApiKey?: string | null,
   hasApiKey?: boolean | null,
-  id: string,
-};
-
-export type UpdateTodoInput = {
-  content?: string | null,
   id: string,
 };
 
@@ -360,17 +324,17 @@ export type ModelSubscriptionIDInput = {
 
 export type ModelSubscriptionJobItemFilterInput = {
   and?: Array< ModelSubscriptionJobItemFilterInput | null > | null,
-  appliedAt?: ModelSubscriptionStringInput | null,
+  company?: ModelSubscriptionStringInput | null,
   coverLetterText?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   cvFile?: ModelSubscriptionStringInput | null,
   cvText?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
+  link?: ModelSubscriptionStringInput | null,
   name?: ModelSubscriptionStringInput | null,
   or?: Array< ModelSubscriptionJobItemFilterInput | null > | null,
   owner?: ModelStringInput | null,
-  reply?: ModelSubscriptionStringInput | null,
   status?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
@@ -390,16 +354,6 @@ export type ModelSubscriptionPrefsFilterInput = {
 export type ModelSubscriptionBooleanInput = {
   eq?: boolean | null,
   ne?: boolean | null,
-};
-
-export type ModelSubscriptionTodoFilterInput = {
-  and?: Array< ModelSubscriptionTodoFilterInput | null > | null,
-  content?: ModelSubscriptionStringInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  id?: ModelSubscriptionIDInput | null,
-  or?: Array< ModelSubscriptionTodoFilterInput | null > | null,
-  owner?: ModelStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
 };
 
 export type GenerateCoverQueryVariables = {
@@ -433,17 +387,17 @@ export type GetJobItemQueryVariables = {
 export type GetJobItemQuery = {
   getJobItem?:  {
     __typename: "JobItem",
-    appliedAt?: string | null,
+    company?: string | null,
     coverLetterText?: string | null,
     createdAt: string,
     cvFile?: string | null,
     cvText?: string | null,
     description?: string | null,
     id: string,
+    link?: string | null,
     name: string,
     owner?: string | null,
-    reply?: string | null,
-    status?: string | null,
+    status?: JobStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -459,21 +413,6 @@ export type GetPrefsQuery = {
     fullName?: string | null,
     gptApiKey?: string | null,
     hasApiKey?: boolean | null,
-    id: string,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type GetTodoQueryVariables = {
-  id: string,
-};
-
-export type GetTodoQuery = {
-  getTodo?:  {
-    __typename: "Todo",
-    content?: string | null,
-    createdAt: string,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -513,17 +452,17 @@ export type ListJobItemsQuery = {
     __typename: "ModelJobItemConnection",
     items:  Array< {
       __typename: "JobItem",
-      appliedAt?: string | null,
+      company?: string | null,
       coverLetterText?: string | null,
       createdAt: string,
       cvFile?: string | null,
       cvText?: string | null,
       description?: string | null,
       id: string,
+      link?: string | null,
       name: string,
       owner?: string | null,
-      reply?: string | null,
-      status?: string | null,
+      status?: JobStatus | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -545,27 +484,6 @@ export type ListPrefsQuery = {
       fullName?: string | null,
       gptApiKey?: string | null,
       hasApiKey?: boolean | null,
-      id: string,
-      owner?: string | null,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ListTodosQueryVariables = {
-  filter?: ModelTodoFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListTodosQuery = {
-  listTodos?:  {
-    __typename: "ModelTodoConnection",
-    items:  Array< {
-      __typename: "Todo",
-      content?: string | null,
-      createdAt: string,
       id: string,
       owner?: string | null,
       updatedAt: string,
@@ -599,17 +517,17 @@ export type CreateJobItemMutationVariables = {
 export type CreateJobItemMutation = {
   createJobItem?:  {
     __typename: "JobItem",
-    appliedAt?: string | null,
+    company?: string | null,
     coverLetterText?: string | null,
     createdAt: string,
     cvFile?: string | null,
     cvText?: string | null,
     description?: string | null,
     id: string,
+    link?: string | null,
     name: string,
     owner?: string | null,
-    reply?: string | null,
-    status?: string | null,
+    status?: JobStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -626,22 +544,6 @@ export type CreatePrefsMutation = {
     fullName?: string | null,
     gptApiKey?: string | null,
     hasApiKey?: boolean | null,
-    id: string,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateTodoMutationVariables = {
-  condition?: ModelTodoConditionInput | null,
-  input: CreateTodoInput,
-};
-
-export type CreateTodoMutation = {
-  createTodo?:  {
-    __typename: "Todo",
-    content?: string | null,
-    createdAt: string,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -673,17 +575,17 @@ export type DeleteJobItemMutationVariables = {
 export type DeleteJobItemMutation = {
   deleteJobItem?:  {
     __typename: "JobItem",
-    appliedAt?: string | null,
+    company?: string | null,
     coverLetterText?: string | null,
     createdAt: string,
     cvFile?: string | null,
     cvText?: string | null,
     description?: string | null,
     id: string,
+    link?: string | null,
     name: string,
     owner?: string | null,
-    reply?: string | null,
-    status?: string | null,
+    status?: JobStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -700,22 +602,6 @@ export type DeletePrefsMutation = {
     fullName?: string | null,
     gptApiKey?: string | null,
     hasApiKey?: boolean | null,
-    id: string,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteTodoMutationVariables = {
-  condition?: ModelTodoConditionInput | null,
-  input: DeleteTodoInput,
-};
-
-export type DeleteTodoMutation = {
-  deleteTodo?:  {
-    __typename: "Todo",
-    content?: string | null,
-    createdAt: string,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -747,17 +633,17 @@ export type UpdateJobItemMutationVariables = {
 export type UpdateJobItemMutation = {
   updateJobItem?:  {
     __typename: "JobItem",
-    appliedAt?: string | null,
+    company?: string | null,
     coverLetterText?: string | null,
     createdAt: string,
     cvFile?: string | null,
     cvText?: string | null,
     description?: string | null,
     id: string,
+    link?: string | null,
     name: string,
     owner?: string | null,
-    reply?: string | null,
-    status?: string | null,
+    status?: JobStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -774,22 +660,6 @@ export type UpdatePrefsMutation = {
     fullName?: string | null,
     gptApiKey?: string | null,
     hasApiKey?: boolean | null,
-    id: string,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateTodoMutationVariables = {
-  condition?: ModelTodoConditionInput | null,
-  input: UpdateTodoInput,
-};
-
-export type UpdateTodoMutation = {
-  updateTodo?:  {
-    __typename: "Todo",
-    content?: string | null,
-    createdAt: string,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -821,17 +691,17 @@ export type OnCreateJobItemSubscriptionVariables = {
 export type OnCreateJobItemSubscription = {
   onCreateJobItem?:  {
     __typename: "JobItem",
-    appliedAt?: string | null,
+    company?: string | null,
     coverLetterText?: string | null,
     createdAt: string,
     cvFile?: string | null,
     cvText?: string | null,
     description?: string | null,
     id: string,
+    link?: string | null,
     name: string,
     owner?: string | null,
-    reply?: string | null,
-    status?: string | null,
+    status?: JobStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -848,22 +718,6 @@ export type OnCreatePrefsSubscription = {
     fullName?: string | null,
     gptApiKey?: string | null,
     hasApiKey?: boolean | null,
-    id: string,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateTodoSubscriptionVariables = {
-  filter?: ModelSubscriptionTodoFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnCreateTodoSubscription = {
-  onCreateTodo?:  {
-    __typename: "Todo",
-    content?: string | null,
-    createdAt: string,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -895,17 +749,17 @@ export type OnDeleteJobItemSubscriptionVariables = {
 export type OnDeleteJobItemSubscription = {
   onDeleteJobItem?:  {
     __typename: "JobItem",
-    appliedAt?: string | null,
+    company?: string | null,
     coverLetterText?: string | null,
     createdAt: string,
     cvFile?: string | null,
     cvText?: string | null,
     description?: string | null,
     id: string,
+    link?: string | null,
     name: string,
     owner?: string | null,
-    reply?: string | null,
-    status?: string | null,
+    status?: JobStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -922,22 +776,6 @@ export type OnDeletePrefsSubscription = {
     fullName?: string | null,
     gptApiKey?: string | null,
     hasApiKey?: boolean | null,
-    id: string,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteTodoSubscriptionVariables = {
-  filter?: ModelSubscriptionTodoFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnDeleteTodoSubscription = {
-  onDeleteTodo?:  {
-    __typename: "Todo",
-    content?: string | null,
-    createdAt: string,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -969,17 +807,17 @@ export type OnUpdateJobItemSubscriptionVariables = {
 export type OnUpdateJobItemSubscription = {
   onUpdateJobItem?:  {
     __typename: "JobItem",
-    appliedAt?: string | null,
+    company?: string | null,
     coverLetterText?: string | null,
     createdAt: string,
     cvFile?: string | null,
     cvText?: string | null,
     description?: string | null,
     id: string,
+    link?: string | null,
     name: string,
     owner?: string | null,
-    reply?: string | null,
-    status?: string | null,
+    status?: JobStatus | null,
     updatedAt: string,
   } | null,
 };
@@ -996,22 +834,6 @@ export type OnUpdatePrefsSubscription = {
     fullName?: string | null,
     gptApiKey?: string | null,
     hasApiKey?: boolean | null,
-    id: string,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateTodoSubscriptionVariables = {
-  filter?: ModelSubscriptionTodoFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnUpdateTodoSubscription = {
-  onUpdateTodo?:  {
-    __typename: "Todo",
-    content?: string | null,
-    createdAt: string,
     id: string,
     owner?: string | null,
     updatedAt: string,

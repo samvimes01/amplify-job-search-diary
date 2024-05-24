@@ -31,16 +31,16 @@ export const onCreateJobItem = /* GraphQL */ `subscription OnCreateJobItem(
   $owner: String
 ) {
   onCreateJobItem(filter: $filter, owner: $owner) {
-    appliedAt
+    company
     coverLetterText
     createdAt
     cvFile
     cvText
     description
     id
+    link
     name
     owner
-    reply
     status
     updatedAt
     __typename
@@ -69,23 +69,6 @@ export const onCreatePrefs = /* GraphQL */ `subscription OnCreatePrefs(
   APITypes.OnCreatePrefsSubscriptionVariables,
   APITypes.OnCreatePrefsSubscription
 >;
-export const onCreateTodo = /* GraphQL */ `subscription OnCreateTodo(
-  $filter: ModelSubscriptionTodoFilterInput
-  $owner: String
-) {
-  onCreateTodo(filter: $filter, owner: $owner) {
-    content
-    createdAt
-    id
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnCreateTodoSubscriptionVariables,
-  APITypes.OnCreateTodoSubscription
->;
 export const onDeleteCvTexts = /* GraphQL */ `subscription OnDeleteCvTexts(
   $filter: ModelSubscriptionCvTextsFilterInput
   $owner: String
@@ -109,16 +92,16 @@ export const onDeleteJobItem = /* GraphQL */ `subscription OnDeleteJobItem(
   $owner: String
 ) {
   onDeleteJobItem(filter: $filter, owner: $owner) {
-    appliedAt
+    company
     coverLetterText
     createdAt
     cvFile
     cvText
     description
     id
+    link
     name
     owner
-    reply
     status
     updatedAt
     __typename
@@ -147,23 +130,6 @@ export const onDeletePrefs = /* GraphQL */ `subscription OnDeletePrefs(
   APITypes.OnDeletePrefsSubscriptionVariables,
   APITypes.OnDeletePrefsSubscription
 >;
-export const onDeleteTodo = /* GraphQL */ `subscription OnDeleteTodo(
-  $filter: ModelSubscriptionTodoFilterInput
-  $owner: String
-) {
-  onDeleteTodo(filter: $filter, owner: $owner) {
-    content
-    createdAt
-    id
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteTodoSubscriptionVariables,
-  APITypes.OnDeleteTodoSubscription
->;
 export const onUpdateCvTexts = /* GraphQL */ `subscription OnUpdateCvTexts(
   $filter: ModelSubscriptionCvTextsFilterInput
   $owner: String
@@ -187,16 +153,16 @@ export const onUpdateJobItem = /* GraphQL */ `subscription OnUpdateJobItem(
   $owner: String
 ) {
   onUpdateJobItem(filter: $filter, owner: $owner) {
-    appliedAt
+    company
     coverLetterText
     createdAt
     cvFile
     cvText
     description
     id
+    link
     name
     owner
-    reply
     status
     updatedAt
     __typename
@@ -224,21 +190,4 @@ export const onUpdatePrefs = /* GraphQL */ `subscription OnUpdatePrefs(
 ` as GeneratedSubscription<
   APITypes.OnUpdatePrefsSubscriptionVariables,
   APITypes.OnUpdatePrefsSubscription
->;
-export const onUpdateTodo = /* GraphQL */ `subscription OnUpdateTodo(
-  $filter: ModelSubscriptionTodoFilterInput
-  $owner: String
-) {
-  onUpdateTodo(filter: $filter, owner: $owner) {
-    content
-    createdAt
-    id
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateTodoSubscriptionVariables,
-  APITypes.OnUpdateTodoSubscription
 >;
