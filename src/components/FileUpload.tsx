@@ -40,7 +40,6 @@ function FileUpload({ onUploadSuccess }: { onUploadSuccess?: () => void }) {
           <StorageManager
             acceptedFileTypes={[
               "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-              "application/pdf",
             ]}
             path={({ identityId }) => `profile/${identityId}/cvs/`}
             maxFileCount={1}

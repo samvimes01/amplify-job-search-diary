@@ -74,6 +74,7 @@ function Job() {
     const { id, error } = await saveFn(data);
     setToast(error ? error : "Job Saved");
     if (id) {
+      setValue("id", id);
       navigate(`/jobs/${id}`);
     }
   };
