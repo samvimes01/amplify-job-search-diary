@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: linear-gradient(180deg, rgb(194, 117, 81), rgb(255, 255, 255));
+  background: linear-gradient(180deg, rgb(4, 125, 149), rgb(255, 255, 255));
   display: flex;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   justify-content: center;
@@ -17,6 +17,17 @@ main {
   align-items: stretch;
   padding: 1rem;
   background: aliceblue;
+}
+.auth-header {
+  background-color: var(--amplify-components-authenticator-router-background-color);
+  box-shadow: var(--amplify-components-authenticator-router-box-shadow);
+  border-color: var(--amplify-components-authenticator-router-border-color);
+  border-width: var(--amplify-components-authenticator-router-border-width);
+  border-style: var(--amplify-components-authenticator-router-border-style);
+  border-bottom: none;
+}
+.amplify-label {
+  font-weight: 500;
 }
 
 .activeItem {

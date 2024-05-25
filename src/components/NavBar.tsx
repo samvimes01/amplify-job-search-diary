@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-import { useAuthenticator } from "@aws-amplify/ui-react";
+import { Image, useAuthenticator } from "@aws-amplify/ui-react";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -71,12 +71,12 @@ function NavBar() {
                   maxWidth: "64px",
                 }}
               >
-                <img
+                <Image
                   width="48px"
                   height="48px"
                   src={Logo}
                   alt="logo"
-                  style={{ objectFit: "contain", filter: "contrast(200%)" }}
+                  style={{ objectFit: "contain", filter: "contrast(600%)" }}
                 />
               </Box>
             </Link>

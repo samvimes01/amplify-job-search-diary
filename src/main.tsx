@@ -7,12 +7,22 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  Authenticator,
+  Heading,
+  Image,
+  useAuthenticator,
+  View,
+} from "@aws-amplify/ui-react";
+import {
+  createTheme,
+  ThemeProvider as MuiThemeProvider,
+} from "@mui/material/styles";
 import { Amplify } from "aws-amplify";
 
 import outputs from "../amplify_outputs.json";
 import App from "./App.tsx";
+import Logo from "./assets/logo.png";
 import NavBar from "./components/NavBar.tsx";
 import "./index.css";
 import ErrorPage from "./pages/Error.tsx";
@@ -33,14 +43,13 @@ Amplify.configure({
   },
 });
 
-
-const theme = createTheme({
+const muiTheme = createTheme({
   palette: {
     primary: {
-      main: "#c27551",
+      main: "hsl(var(--amplify-colors-primary-80))",
     },
     secondary: {
-      main: "#00C9A9",
+      main: "hsl(var(--amplify-colors-secondary-80))",
     },
   },
 });
@@ -76,9 +85,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Authenticator.Provider>
-      <ThemeProvider theme={theme}>
+      <MuiThemeProvider theme={muiTheme}>
         <RouterProvider router={router} />
-      </ThemeProvider>
+      </MuiThemeProvider>
     </Authenticator.Provider>
   </React.StrictMode>
 );
@@ -103,7 +112,18 @@ function Layout() {
         justifyContent: "center",
       }}
     >
-      <Authenticator />
+      <Authenticator
+        components={{
+          Header() {
+            return (
+              <View textAlign="center" padding="1rem" className="auth-header">
+                <Image alt="Job search journal logo" src={Logo} />
+                <Heading>Job Search Journal</Heading>
+              </View>
+            );
+          },
+        }}
+      />
     </div>
   );
 }

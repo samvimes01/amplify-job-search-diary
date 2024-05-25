@@ -1,4 +1,4 @@
-import { Button, Flex } from "@aws-amplify/ui-react";
+import { Button, Flex, Heading } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import { useNavigate } from "react-router-dom";
 import JobList from "./components/JobList";
@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
-        <h1>Jobs</h1>
+        <Heading level={3}>Jobs</Heading>
         <Button
           variation="primary"
           onClick={() => navigate("jobs/new")}

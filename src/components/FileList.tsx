@@ -1,4 +1,4 @@
-import { Flex, Text } from "@aws-amplify/ui-react";
+import { Flex, Heading, Text } from "@aws-amplify/ui-react";
 import { ListPaginateWithPathOutput, list } from "aws-amplify/storage";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
@@ -36,9 +36,9 @@ const FileList = ({
   return (
     <div>
       <Flex justifyContent="space-between" alignItems="center">
-        <h3>
+        <Heading level={4}>
           {files.length ? "Select a CV file" : "No CV files uploaded yet"}
-        </h3>
+        </Heading>
         <FileUpload onUploadSuccess={fetchFiles} />
       </Flex>
       <ul style={{ maxHeight: "40vh", overflowY: "auto", cursor: "pointer" }}>

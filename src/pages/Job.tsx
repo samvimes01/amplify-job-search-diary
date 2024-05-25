@@ -52,7 +52,7 @@ function Job() {
   const updateJob = useAmplifyClient((state) => state.updateJob);
   const getPrefs = useAmplifyClient((state) => state.getPrefs);
 
-  const [cvFile, setCvFile] = useState<string>("");
+  const [cvFile, setCvFile] = useState<string>(jobItem.cvFile);
   const [cvContents, setCvContents] = useState<string>("");
   const [toast, setToast] = useState<string>("");
   const [generating, setGenerating] = useState<boolean>(false);
@@ -65,8 +65,9 @@ function Job() {
   }, [cvFile]);
 
   const onFileSelect = (path: string): void => {
-    setValue("cvFile", path);
-    setCvFile(path);
+    const file = cvFile == path ? "" : path;
+    setValue("cvFile", file);
+    setCvFile(file);
   };
   const onSubmit: SubmitHandler<JobItem> = async (data) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -113,7 +114,7 @@ function Job() {
       <Grid
         columnGap="1rem"
         rowGap="2rem"
-        templateColumns="repeat(auto-fill, 49%)"
+        templateColumns="repeat(auto-fill, minmax(49%, 1fr))"
         templateRows="1fr"
       >
         <View minWidth="380px">
@@ -176,7 +177,7 @@ function Job() {
 
               <Button
                 type="button"
-                disabled={!hasGPTValues || generating}
+                isDisabled={!hasGPTValues || generating}
                 onClick={generateCover}
               >
                 Generate Cover Letter
@@ -199,7 +200,7 @@ function Job() {
                 variation="primary"
                 colorTheme="success"
                 gap="0.4rem"
-                disabled={!getValues("name")}
+                isDisabled={!getValues("name")}
               >
                 <IconSave /> Save
               </Button>

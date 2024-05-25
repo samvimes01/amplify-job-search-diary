@@ -2,6 +2,7 @@ import {
   AccountSettings,
   Button,
   Flex,
+  Heading,
   Input,
   Label,
   useAuthenticator,
@@ -21,8 +22,8 @@ function Profile() {
   useEffect(() => {
     getPrefs()
       .then((p) => {
-        setName(p.name)
-        setApiKey(p.key)
+        setName(p.name);
+        setApiKey(p.key);
       })
       .catch(console.error);
   }, [getPrefs]);
@@ -33,13 +34,13 @@ function Profile() {
   const onSave = () => {
     if (!name) {
       alert("name is mandatory");
-      return 
+      return;
     }
     setPrefs(key, name).catch(console.error);
   };
   return (
     <>
-      <h2>Details</h2>
+      <Heading level={3}>Details</Heading>
       {user && (
         <div>
           <div>
@@ -53,7 +54,7 @@ function Profile() {
       <br />
       <Flex columnGap="8rem" rowGap="large" wrap="wrap">
         <Flex direction="column" gap="small" minWidth="340px">
-          <h2>Preferences</h2>
+          <Heading level={3}>Preferences</Heading>
           <Label htmlFor="user_name">User full name</Label>
           <Input
             id="user_name"
@@ -77,7 +78,7 @@ function Profile() {
           <br />
         </Flex>
         <Flex direction="column" gap="small" minWidth="340px">
-          <h2>Change Password</h2>
+          <Heading level={3}>Change Password</Heading>
           <AccountSettings.ChangePassword onSuccess={handleSuccess} />
         </Flex>
       </Flex>

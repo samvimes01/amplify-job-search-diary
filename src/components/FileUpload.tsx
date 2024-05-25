@@ -1,4 +1,4 @@
-import { Button, Text, View } from "@aws-amplify/ui-react";
+import { Button, Heading, View } from "@aws-amplify/ui-react";
 import { StorageManager } from "@aws-amplify/ui-react-storage";
 
 import Modal from "@mui/material/Modal";
@@ -36,7 +36,9 @@ function FileUpload({ onUploadSuccess }: { onUploadSuccess?: () => void }) {
         aria-describedby="child-modal-description"
       >
         <View {...style}>
-          <Text as="h2">Accepts .pdf or .docx</Text>
+          <Heading level={5} margin="1rem auto" textAlign="center">
+            Accepts .docx
+          </Heading>
           <StorageManager
             acceptedFileTypes={[
               "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -47,8 +49,9 @@ function FileUpload({ onUploadSuccess }: { onUploadSuccess?: () => void }) {
             isResumable
             onUploadSuccess={onUploadSuccess}
           />
-          <br />
-          <Button onClick={handleClose}>Close modal</Button>
+          <Button margin="1rem auto" width="100%" onClick={handleClose}>
+            Close modal
+          </Button>
         </View>
       </Modal>
     </>
