@@ -22,8 +22,8 @@ It leverages AWS Amplify authentication, data, file storage, serverless function
 
 https://github.com/samvimes01/amplify-job-search-diary/assets/4409473/f86cf5fe-9c6b-4a9c-b02b-46dda28bd896
 
-The same as the video above - the gif file is about 2 minutes long.
-![Flow](video.gif)
+The gif file is about 2 minutes long.
+![app](https://github.com/samvimes01/amplify-job-search-diary/assets/4409473/35739df6-9415-4a46-8dc0-27e4a641786b)
 
 
 ## License
