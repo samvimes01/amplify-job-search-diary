@@ -31,17 +31,6 @@ import Profile from "./pages/Profile.tsx";
 import { getJobLoader } from "./store/index.ts";
 
 Amplify.configure(outputs);
-const existingConfig = Amplify.getConfig();
-Amplify.configure({
-  ...existingConfig,
-  API: {
-    ...existingConfig.API,
-    REST: {
-      ...existingConfig.API?.REST,
-      ...outputs.custom.API,
-    },
-  },
-});
 
 const muiTheme = createTheme({
   palette: {

@@ -1,21 +1,15 @@
-import { defineFunction, defineStorage } from '@aws-amplify/backend';
-
-const onUpload = defineFunction({
-  entry: './on-upload-handlers.ts',
-  environment: {
-    GRAPHQL_API: process.env.GRAPHQL_API!,
-  }
-})
+import { defineStorage } from '@aws-amplify/backend';
+import { onCvUploadHandler } from '../functions/upload-handler/resource';
 
 export const storage = defineStorage({
   name: 'amplifyTeamDrive',
   access: (allow) => ({
     'profile/{entity_id}/*': [
       allow.entity('identity').to(['read', 'write', 'delete']),
-      allow.resource(onUpload).to(['read'])
+      allow.resource(onCvUploadHandler).to(['read'])
     ]
   }),
   triggers: {
-    onUpload: onUpload,
+    onUpload: onCvUploadHandler,
   }
 });

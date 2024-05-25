@@ -8,15 +8,11 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateCvTexts = /* GraphQL */ `subscription OnCreateCvTexts(
-  $filter: ModelSubscriptionCvTextsFilterInput
-  $owner: String
-) {
-  onCreateCvTexts(filter: $filter, owner: $owner) {
+export const onCreateCvTexts = /* GraphQL */ `subscription OnCreateCvTexts($filter: ModelSubscriptionCvTextsFilterInput) {
+  onCreateCvTexts(filter: $filter) {
     createdAt
     file
     id
-    owner
     text
     updatedAt
     __typename
@@ -57,8 +53,6 @@ export const onCreatePrefs = /* GraphQL */ `subscription OnCreatePrefs(
   onCreatePrefs(filter: $filter, owner: $owner) {
     createdAt
     fullName
-    gptApiKey
-    hasApiKey
     id
     owner
     updatedAt
@@ -69,15 +63,11 @@ export const onCreatePrefs = /* GraphQL */ `subscription OnCreatePrefs(
   APITypes.OnCreatePrefsSubscriptionVariables,
   APITypes.OnCreatePrefsSubscription
 >;
-export const onDeleteCvTexts = /* GraphQL */ `subscription OnDeleteCvTexts(
-  $filter: ModelSubscriptionCvTextsFilterInput
-  $owner: String
-) {
-  onDeleteCvTexts(filter: $filter, owner: $owner) {
+export const onDeleteCvTexts = /* GraphQL */ `subscription OnDeleteCvTexts($filter: ModelSubscriptionCvTextsFilterInput) {
+  onDeleteCvTexts(filter: $filter) {
     createdAt
     file
     id
-    owner
     text
     updatedAt
     __typename
@@ -118,8 +108,6 @@ export const onDeletePrefs = /* GraphQL */ `subscription OnDeletePrefs(
   onDeletePrefs(filter: $filter, owner: $owner) {
     createdAt
     fullName
-    gptApiKey
-    hasApiKey
     id
     owner
     updatedAt
@@ -130,15 +118,11 @@ export const onDeletePrefs = /* GraphQL */ `subscription OnDeletePrefs(
   APITypes.OnDeletePrefsSubscriptionVariables,
   APITypes.OnDeletePrefsSubscription
 >;
-export const onUpdateCvTexts = /* GraphQL */ `subscription OnUpdateCvTexts(
-  $filter: ModelSubscriptionCvTextsFilterInput
-  $owner: String
-) {
-  onUpdateCvTexts(filter: $filter, owner: $owner) {
+export const onUpdateCvTexts = /* GraphQL */ `subscription OnUpdateCvTexts($filter: ModelSubscriptionCvTextsFilterInput) {
+  onUpdateCvTexts(filter: $filter) {
     createdAt
     file
     id
-    owner
     text
     updatedAt
     __typename
@@ -179,8 +163,6 @@ export const onUpdatePrefs = /* GraphQL */ `subscription OnUpdatePrefs(
   onUpdatePrefs(filter: $filter, owner: $owner) {
     createdAt
     fullName
-    gptApiKey
-    hasApiKey
     id
     owner
     updatedAt

@@ -16,7 +16,6 @@ export const createCvTexts = /* GraphQL */ `mutation CreateCvTexts(
     createdAt
     file
     id
-    owner
     text
     updatedAt
     __typename
@@ -57,8 +56,6 @@ export const createPrefs = /* GraphQL */ `mutation CreatePrefs(
   createPrefs(condition: $condition, input: $input) {
     createdAt
     fullName
-    gptApiKey
-    hasApiKey
     id
     owner
     updatedAt
@@ -77,7 +74,6 @@ export const deleteCvTexts = /* GraphQL */ `mutation DeleteCvTexts(
     createdAt
     file
     id
-    owner
     text
     updatedAt
     __typename
@@ -118,8 +114,6 @@ export const deletePrefs = /* GraphQL */ `mutation DeletePrefs(
   deletePrefs(condition: $condition, input: $input) {
     createdAt
     fullName
-    gptApiKey
-    hasApiKey
     id
     owner
     updatedAt
@@ -138,7 +132,6 @@ export const updateCvTexts = /* GraphQL */ `mutation UpdateCvTexts(
     createdAt
     file
     id
-    owner
     text
     updatedAt
     __typename
@@ -179,8 +172,6 @@ export const updatePrefs = /* GraphQL */ `mutation UpdatePrefs(
   updatePrefs(condition: $condition, input: $input) {
     createdAt
     fullName
-    gptApiKey
-    hasApiKey
     id
     owner
     updatedAt

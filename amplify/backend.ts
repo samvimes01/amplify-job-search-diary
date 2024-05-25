@@ -1,21 +1,19 @@
 import { defineBackend } from '@aws-amplify/backend';
 import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { auth } from './auth/resource';
-import { MODEL_ID } from './data/mistral';
-import { data, mistralCoverLetter } from './data/resource';
-import { initAPI } from './functions/prompt/init-api';
-import { gptCoverLetter } from './functions/prompt/resource';
+import { data } from './data/resource';
 import { storage } from './storage/resource';
+import { genCoverLetter } from './functions/gen-cover-letter/resource';
+import { MODEL_ID } from './functions/gen-cover-letter/ai-model';
 
 const backend = defineBackend({
   auth,
   data,
   storage,
-  gptCoverLetter,
-  mistralCoverLetter,
+  genCoverLetter,
 });
 
-backend.mistralCoverLetter.resources.lambda.addToRolePolicy(
+backend.genCoverLetter.resources.lambda.addToRolePolicy(
   new PolicyStatement({
     effect: Effect.ALLOW,
     actions: ["bedrock:InvokeModel"],
@@ -24,5 +22,3 @@ backend.mistralCoverLetter.resources.lambda.addToRolePolicy(
     ],
   })
 );
-
-initAPI(backend)

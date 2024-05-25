@@ -20,7 +20,6 @@ export const getCvTexts = /* GraphQL */ `query GetCvTexts($id: ID!) {
     createdAt
     file
     id
-    owner
     text
     updatedAt
     __typename
@@ -55,8 +54,6 @@ export const getPrefs = /* GraphQL */ `query GetPrefs($id: ID!) {
   getPrefs(id: $id) {
     createdAt
     fullName
-    gptApiKey
-    hasApiKey
     id
     owner
     updatedAt
@@ -74,7 +71,6 @@ export const listCvTexts = /* GraphQL */ `query ListCvTexts(
       createdAt
       file
       id
-      owner
       text
       updatedAt
       __typename
@@ -125,8 +121,6 @@ export const listPrefs = /* GraphQL */ `query ListPrefs(
     items {
       createdAt
       fullName
-      gptApiKey
-      hasApiKey
       id
       owner
       updatedAt

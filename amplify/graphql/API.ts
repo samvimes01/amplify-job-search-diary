@@ -7,7 +7,6 @@ export type CvTexts = {
   createdAt: string,
   file: string,
   id: string,
-  owner?: string | null,
   text?: string | null,
   updatedAt: string,
 };
@@ -41,8 +40,6 @@ export type Prefs = {
   __typename: "Prefs",
   createdAt: string,
   fullName?: string | null,
-  gptApiKey?: string | null,
-  hasApiKey?: boolean | null,
   id: string,
   owner?: string | null,
   updatedAt: string,
@@ -55,7 +52,6 @@ export type ModelCvTextsFilterInput = {
   id?: ModelIDInput | null,
   not?: ModelCvTextsFilterInput | null,
   or?: Array< ModelCvTextsFilterInput | null > | null,
-  owner?: ModelStringInput | null,
   text?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
@@ -155,20 +151,11 @@ export type ModelPrefsFilterInput = {
   and?: Array< ModelPrefsFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
   fullName?: ModelStringInput | null,
-  gptApiKey?: ModelStringInput | null,
-  hasApiKey?: ModelBooleanInput | null,
   id?: ModelIDInput | null,
   not?: ModelPrefsFilterInput | null,
   or?: Array< ModelPrefsFilterInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-};
-
-export type ModelBooleanInput = {
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  eq?: boolean | null,
-  ne?: boolean | null,
 };
 
 export type ModelPrefsConnection = {
@@ -183,7 +170,6 @@ export type ModelCvTextsConditionInput = {
   file?: ModelStringInput | null,
   not?: ModelCvTextsConditionInput | null,
   or?: Array< ModelCvTextsConditionInput | null > | null,
-  owner?: ModelStringInput | null,
   text?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
@@ -228,8 +214,6 @@ export type ModelPrefsConditionInput = {
   and?: Array< ModelPrefsConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
   fullName?: ModelStringInput | null,
-  gptApiKey?: ModelStringInput | null,
-  hasApiKey?: ModelBooleanInput | null,
   not?: ModelPrefsConditionInput | null,
   or?: Array< ModelPrefsConditionInput | null > | null,
   owner?: ModelStringInput | null,
@@ -238,8 +222,6 @@ export type ModelPrefsConditionInput = {
 
 export type CreatePrefsInput = {
   fullName?: string | null,
-  gptApiKey?: string | null,
-  hasApiKey?: boolean | null,
   id?: string | null,
 };
 
@@ -276,8 +258,6 @@ export type UpdateJobItemInput = {
 
 export type UpdatePrefsInput = {
   fullName?: string | null,
-  gptApiKey?: string | null,
-  hasApiKey?: boolean | null,
   id: string,
 };
 
@@ -287,7 +267,6 @@ export type ModelSubscriptionCvTextsFilterInput = {
   file?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionCvTextsFilterInput | null > | null,
-  owner?: ModelStringInput | null,
   text?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
@@ -343,17 +322,10 @@ export type ModelSubscriptionPrefsFilterInput = {
   and?: Array< ModelSubscriptionPrefsFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
   fullName?: ModelSubscriptionStringInput | null,
-  gptApiKey?: ModelSubscriptionStringInput | null,
-  hasApiKey?: ModelSubscriptionBooleanInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionPrefsFilterInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-};
-
-export type ModelSubscriptionBooleanInput = {
-  eq?: boolean | null,
-  ne?: boolean | null,
 };
 
 export type GenerateCoverQueryVariables = {
@@ -374,7 +346,6 @@ export type GetCvTextsQuery = {
     createdAt: string,
     file: string,
     id: string,
-    owner?: string | null,
     text?: string | null,
     updatedAt: string,
   } | null,
@@ -411,8 +382,6 @@ export type GetPrefsQuery = {
     __typename: "Prefs",
     createdAt: string,
     fullName?: string | null,
-    gptApiKey?: string | null,
-    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -433,7 +402,6 @@ export type ListCvTextsQuery = {
       createdAt: string,
       file: string,
       id: string,
-      owner?: string | null,
       text?: string | null,
       updatedAt: string,
     } | null >,
@@ -482,8 +450,6 @@ export type ListPrefsQuery = {
       __typename: "Prefs",
       createdAt: string,
       fullName?: string | null,
-      gptApiKey?: string | null,
-      hasApiKey?: boolean | null,
       id: string,
       owner?: string | null,
       updatedAt: string,
@@ -503,7 +469,6 @@ export type CreateCvTextsMutation = {
     createdAt: string,
     file: string,
     id: string,
-    owner?: string | null,
     text?: string | null,
     updatedAt: string,
   } | null,
@@ -542,8 +507,6 @@ export type CreatePrefsMutation = {
     __typename: "Prefs",
     createdAt: string,
     fullName?: string | null,
-    gptApiKey?: string | null,
-    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -561,7 +524,6 @@ export type DeleteCvTextsMutation = {
     createdAt: string,
     file: string,
     id: string,
-    owner?: string | null,
     text?: string | null,
     updatedAt: string,
   } | null,
@@ -600,8 +562,6 @@ export type DeletePrefsMutation = {
     __typename: "Prefs",
     createdAt: string,
     fullName?: string | null,
-    gptApiKey?: string | null,
-    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -619,7 +579,6 @@ export type UpdateCvTextsMutation = {
     createdAt: string,
     file: string,
     id: string,
-    owner?: string | null,
     text?: string | null,
     updatedAt: string,
   } | null,
@@ -658,8 +617,6 @@ export type UpdatePrefsMutation = {
     __typename: "Prefs",
     createdAt: string,
     fullName?: string | null,
-    gptApiKey?: string | null,
-    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -668,7 +625,6 @@ export type UpdatePrefsMutation = {
 
 export type OnCreateCvTextsSubscriptionVariables = {
   filter?: ModelSubscriptionCvTextsFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateCvTextsSubscription = {
@@ -677,7 +633,6 @@ export type OnCreateCvTextsSubscription = {
     createdAt: string,
     file: string,
     id: string,
-    owner?: string | null,
     text?: string | null,
     updatedAt: string,
   } | null,
@@ -716,8 +671,6 @@ export type OnCreatePrefsSubscription = {
     __typename: "Prefs",
     createdAt: string,
     fullName?: string | null,
-    gptApiKey?: string | null,
-    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -726,7 +679,6 @@ export type OnCreatePrefsSubscription = {
 
 export type OnDeleteCvTextsSubscriptionVariables = {
   filter?: ModelSubscriptionCvTextsFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteCvTextsSubscription = {
@@ -735,7 +687,6 @@ export type OnDeleteCvTextsSubscription = {
     createdAt: string,
     file: string,
     id: string,
-    owner?: string | null,
     text?: string | null,
     updatedAt: string,
   } | null,
@@ -774,8 +725,6 @@ export type OnDeletePrefsSubscription = {
     __typename: "Prefs",
     createdAt: string,
     fullName?: string | null,
-    gptApiKey?: string | null,
-    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,
@@ -784,7 +733,6 @@ export type OnDeletePrefsSubscription = {
 
 export type OnUpdateCvTextsSubscriptionVariables = {
   filter?: ModelSubscriptionCvTextsFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateCvTextsSubscription = {
@@ -793,7 +741,6 @@ export type OnUpdateCvTextsSubscription = {
     createdAt: string,
     file: string,
     id: string,
-    owner?: string | null,
     text?: string | null,
     updatedAt: string,
   } | null,
@@ -832,8 +779,6 @@ export type OnUpdatePrefsSubscription = {
     __typename: "Prefs",
     createdAt: string,
     fullName?: string | null,
-    gptApiKey?: string | null,
-    hasApiKey?: boolean | null,
     id: string,
     owner?: string | null,
     updatedAt: string,

@@ -16,14 +16,12 @@ function Profile() {
   const getPrefs = useAmplifyClient((state) => state.getPrefs);
   const setPrefs = useAmplifyClient((state) => state.setPrefs);
 
-  const [key, setApiKey] = useState<string>("");
   const [name, setName] = useState<string>("");
 
   useEffect(() => {
     getPrefs()
       .then((p) => {
         setName(p.name);
-        setApiKey(p.key);
       })
       .catch(console.error);
   }, [getPrefs]);
@@ -36,7 +34,7 @@ function Profile() {
       alert("name is mandatory");
       return;
     }
-    setPrefs(key, name).catch(console.error);
+    setPrefs(name).catch(console.error);
   };
   return (
     <>
@@ -61,16 +59,6 @@ function Profile() {
             name="user_name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-          />
-          <Label htmlFor="gpt_api_key">
-            OpenAI API key (temporary not used):
-          </Label>
-          <Input
-            id="gpt_api_key"
-            name="gpt_api_key"
-            value={key}
-            disabled
-            onChange={(e) => setApiKey(e.target.value)}
           />
           <Button onClick={onSave} maxWidth="fit-content" variation="primary">
             Save
