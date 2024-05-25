@@ -186,10 +186,10 @@ function Job() {
               <RadioGroupField
                 legend="Status: "
                 direction="row"
-                {...register("status")}
+                name="status"
               >
                 {statuses.map((s) => (
-                  <Radio key={s} value={s}>
+                  <Radio key={s} value={s} {...register("status")}>
                     {s}
                   </Radio>
                 ))}
