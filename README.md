@@ -5,9 +5,8 @@ This is made for [The AWS Amplify Fullstack Typescript Challenge](https://dev.to
 
 ## Overview
 
-This is a job seeker journal application. The app allows user to create a list of jobs he wants to aplly and store diferent CV and Cover letteres connected with job.
-
-It leverages AWS Amplify authentication, data, file storage, serverless functions, the AWS Amplify UI React library, and AWS Bedrock with the Mistral:7B model to generate cover letter text. This application helps users keep track of the jobs they have applied for and includes an AI-powered cover letter generator backed by AWS Bedrock.
+This is a job seeker journal application. The app helps users keep track of the jobs they have applied for, and store different CVs and Cover letters connected with jobs.
+It leverages AWS Amplify authentication, data, file storage, serverless functions, the AWS Amplify UI React library, and AWS Bedrock with the Mistral:7B model to generate cover letter text.
 
 ## Features
 
@@ -21,8 +20,11 @@ It leverages AWS Amplify authentication, data, file storage, serverless function
 
 ## Preview
 
-Gif is about 2 minutes long. Ther is an mp4 [video](video.mp4) as well in repo.
+https://github.com/samvimes01/amplify-job-search-diary/assets/4409473/f86cf5fe-9c6b-4a9c-b02b-46dda28bd896
+
+The same as the video above - the gif file is about 2 minutes long.
 ![Flow](video.gif)
+
 
 ## License
 
