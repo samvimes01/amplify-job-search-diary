@@ -1,12 +1,13 @@
 {
   "name": "amplify-vite-react-template",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "gengraphql": "ampx generate graphql-client-code --out amplify/graphql",
     "preview": "vite preview"
   },
   "dependencies": {

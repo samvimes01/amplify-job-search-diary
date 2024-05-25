@@ -52,7 +52,7 @@ function Job() {
   const updateJob = useAmplifyClient((state) => state.updateJob);
   const getPrefs = useAmplifyClient((state) => state.getPrefs);
 
-  const [cvFile, setCvFile] = useState<string>(jobItem.cvFile);
+  const [cvFile, setCvFile] = useState<string>(jobItem?.cvFile ?? "");
   const [cvContents, setCvContents] = useState<string>("");
   const [toast, setToast] = useState<string>("");
   const [generating, setGenerating] = useState<boolean>(false);

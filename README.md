@@ -1,24 +1,28 @@
-## AWS Amplify React+Vite Starter Template
+# AWS Amplify React+Vite Job Seeker Journal
 
-This repository provides a starter template for creating applications using React+Vite and AWS Amplify, emphasizing easy setup for authentication, API, and database capabilities.
+This repository provides a web application using React+Vite and AWS Amplify and AWS Bedrock.
+This is made for [The AWS Amplify Fullstack Typescript Challenge](https://dev.to/challenges/aws)
 
 ## Overview
 
-This template equips you with a foundational React application integrated with AWS Amplify, streamlined for scalability and performance. It is ideal for developers looking to jumpstart their project with pre-configured AWS services like Cognito, AppSync, and DynamoDB.
+This is a job seeker journal application. The app allows user to create a list of jobs he wants to aplly and store diferent CV and Cover letteres connected with job.
+
+It leverages AWS Amplify authentication, data, file storage, serverless functions, the AWS Amplify UI React library, and AWS Bedrock with the Mistral:7B model to generate cover letter text. This application helps users keep track of the jobs they have applied for and includes an AI-powered cover letter generator backed by AWS Bedrock.
 
 ## Features
 
 - **Authentication**: Setup with Amazon Cognito for secure user authentication.
 - **API**: Ready-to-use GraphQL endpoint with AWS AppSync.
 - **Database**: Real-time database powered by Amazon DynamoDB.
+- **Functions**: Serverless functions powered by AWS Lambda.
+- **AI**: easy access to AI provided by AWS Bedrock.
 
-## Deploying to AWS
+ ![AWS diagram](scheme.png)
 
-For detailed instructions on deploying your application, refer to the [deployment section](https://docs.amplify.aws/react/start/quickstart/#deploy-a-fullstack-app-to-aws) of our documentation.
+## Preview
 
-## Security
-
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+Gif is about 2 minutes long. Ther is an mp4 [video](video.mp4) as well in repo.
+![Flow](video.gif)
 
 ## License
 
